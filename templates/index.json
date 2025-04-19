@@ -1,1 +1,288 @@
-{"sections":{"image_banner_p8ACRb":{"type":"image-banner","blocks":{"heading_wFKyaq":{"type":"heading","settings":{"heading":"NEW COLLECTION LIVE!","heading_size":"h1"}},"buttons_Tc3Vkw":{"type":"buttons","settings":{"button_label_1":"SHOW NOW","button_link_1":"shopify:\/\/collections","button_style_secondary_1":true,"button_label_2":"Button label","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading_wFKyaq","buttons_Tc3Vkw"],"settings":{"image":"shopify:\/\/shop_images\/thunder.gif","image_overlay_opacity":40,"image_height":"small","desktop_content_position":"middle-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"background-1","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":false}},"featured_collection":{"type":"featured-collection","settings":{"title":"Men's Featured","heading_size":"h1","description":"","show_description":false,"description_style":"body","collection":"summer-collection","products_to_show":8,"columns_desktop":4,"full_width":true,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":true,"color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":true,"show_vendor":false,"show_rating":false,"enable_quick_add":true,"columns_mobile":"2","swipe_on_mobile":true,"padding_top":28,"padding_bottom":36}},"multirow_mPPgDM":{"type":"multirow","blocks":{"row_XP3KHa":{"type":"row","settings":{"image":"shopify:\/\/shop_images\/ChatGPT_Image_Apr_15_2025_04_56_10_AM.png","caption":"Essential Strength","heading":"Ribbed Tank (Essentials Drop)","text":"<p><br\/>Built for movement, designed for presence. Our ribbed tank is lightweight, durable, and cut to highlight the physique. Embroidered lightning logo keeps it clean, iconic.<br\/><br\/><\/p>","button_label":"Shop the Tank","button_link":""}},"row_RCLYmy":{"type":"row","settings":{"image":"shopify:\/\/shop_images\/Apr_15_2025_04_59_44_AM.png","caption":"Street Energy","heading":"Oversized T-Shirt","text":"<p><br\/>This drop speaks loud. SANITY curved block print in bold red, paired with the lightning bolt—designed for athletes who don’t blend in.<br\/><br\/><\/p>","button_label":"View Drop 01","button_link":""}},"row_qnLFRp":{"type":"row","settings":{"image":"shopify:\/\/shop_images\/ChatGPT_Image_Apr_15_2025_05_33_39_AM.png","caption":"Move Like Lightning","heading":"Storm Shorts","text":"<p><br\/>Crafted for performance and aesthetics. These shorts bring together function, comfort, and SANITY’s signature thunderbolt edge.<br\/><br\/><\/p>","button_label":"Shop Storm Shorts","button_link":""}}},"block_order":["row_XP3KHa","row_RCLYmy","row_qnLFRp"],"settings":{"image_height":"small","desktop_image_width":"medium","heading_size":"h1","text_style":"body","button_style":"secondary","desktop_content_position":"middle","desktop_content_alignment":"left","image_layout":"alternate-left","section_color_scheme":"background-1","row_color_scheme":"background-1","mobile_content_alignment":"center","padding_top":36,"padding_bottom":40}},"image_banner_EdtY8D":{"type":"image-banner","blocks":{"heading_UdALrw":{"type":"heading","settings":{"heading":"Bestsellers","heading_size":"h1"}},"text_FyKLVa":{"type":"text","settings":{"text":"Upgrade your wardrobe with fresh lifting and rest day styles in seasonal shades.","text_style":"body"}},"buttons_DAqm6q":{"type":"buttons","settings":{"button_label_1":"SHOP NOW","button_link_1":"shopify:\/\/products\/⚡-sanity-ribbed-tank","button_style_secondary_1":false,"button_label_2":"Button label","button_link_2":"","button_style_secondary_2":false}}},"block_order":["heading_UdALrw","text_FyKLVa","buttons_DAqm6q"],"settings":{"image":"shopify:\/\/shop_images\/ChatGPT_Image_Apr_15_2025_03_45_21_AM.png","image_overlay_opacity":0,"image_height":"large","desktop_content_position":"middle-left","show_text_box":true,"desktop_content_alignment":"center","color_scheme":"background-1","mobile_content_alignment":"center","stack_images_on_mobile":true,"show_text_below":true}},"collection_list_Qx6Cae":{"type":"collection-list","blocks":{"featured_collection_Tqq8Hg":{"type":"featured_collection","settings":{"collection":"frontpage"}},"featured_collection_cC9BX7":{"type":"featured_collection","settings":{"collection":"summer-collection"}},"featured_collection_wce8bT":{"type":"featured_collection","settings":{"collection":"t-shirts"}}},"block_order":["featured_collection_Tqq8Hg","featured_collection_cC9BX7","featured_collection_wce8bT"],"settings":{"title":"Collections","heading_size":"h1","image_ratio":"square","columns_desktop":3,"color_scheme":"background-1","show_view_all":false,"columns_mobile":"1","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36}},"multicolumn_dhd4AR":{"type":"multicolumn","blocks":{"column_FQLxxp":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/ChatGPT_Image_Apr_15_2025_03_45_21_AM.png","title":"Engineered Performance","text":"<p><br\/>Crafted from high‑stretch, moisture‑wicking fabrics that move with you, Sanity gear delivers next‑level breathability and support so you can crush every rep, sprint, or stretch.<br\/><br\/><\/p>","link_label":"","link":""}},"column_zKfVmj":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/ChatGPT_Image_Apr_15_2025_02_38_35_AM.png","title":"Planet‑Smart Construction","text":"<p><br\/>We source recycled and low‑impact materials without ever sacrificing durability or comfort—because looking good shouldn’t cost the earth.<br\/><br\/><\/p>","link_label":"","link":""}},"column_CfzdYW":{"type":"column","settings":{"image":"shopify:\/\/shop_images\/ChatGPT_Image_Apr_15_2025_03_41_40_AM.png","title":"Community‑Fueled Drive","text":"<p><br\/>Join a global tribe of athletes, creators, and do‑ers who inspire each other every day—because when one of us wins, we all win.<br\/><br\/><\/p>","link_label":"","link":""}}},"block_order":["column_FQLxxp","column_zKfVmj","column_CfzdYW"],"settings":{"title":"WHY SANITY?","heading_size":"h1","image_width":"full","image_ratio":"adapt","columns_desktop":3,"column_alignment":"center","background_style":"primary","button_label":"","button_link":"","color_scheme":"background-1","columns_mobile":"1","swipe_on_mobile":true,"padding_top":36,"padding_bottom":36}}},"order":["image_banner_p8ACRb","featured_collection","multirow_mPPgDM","image_banner_EdtY8D","collection_list_Qx6Cae","multicolumn_dhd4AR"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner_p8ACRb": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_wFKyaq": {
+          "type": "heading",
+          "settings": {
+            "heading": "NEW COLLECTION LIVE!",
+            "heading_size": "h1"
+          }
+        },
+        "buttons_Tc3Vkw": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SHOW NOW",
+            "button_link_1": "shopify://collections",
+            "button_style_secondary_1": true,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_wFKyaq",
+        "buttons_Tc3Vkw"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/thunder.gif",
+        "image_overlay_opacity": 40,
+        "image_height": "small",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": false
+      }
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Men's Featured",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "summer-collection",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": true,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": true,
+        "color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": true,
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 28,
+        "padding_bottom": 36
+      }
+    },
+    "multirow_mPPgDM": {
+      "type": "multirow",
+      "blocks": {
+        "row_XP3KHa": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Apr_15_2025_04_56_10_AM.png",
+            "caption": "Essential Strength",
+            "heading": "Ribbed Tank (Essentials Drop)",
+            "text": "<p><br/>Built for movement, designed for presence. Our ribbed tank is lightweight, durable, and cut to highlight the physique. Embroidered lightning logo keeps it clean, iconic.<br/><br/></p>",
+            "button_label": "Shop the Tank",
+            "button_link": ""
+          }
+        },
+        "row_RCLYmy": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/Apr_15_2025_04_59_44_AM.png",
+            "caption": "Street Energy",
+            "heading": "Oversized T-Shirt",
+            "text": "<p><br/>This drop speaks loud. SANITY curved block print in bold red, paired with the lightning bolt—designed for athletes who don’t blend in.<br/><br/></p>",
+            "button_label": "View Drop 01",
+            "button_link": ""
+          }
+        },
+        "row_qnLFRp": {
+          "type": "row",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Apr_15_2025_05_33_39_AM.png",
+            "caption": "Move Like Lightning",
+            "heading": "Storm Shorts",
+            "text": "<p><br/>Crafted for performance and aesthetics. These shorts bring together function, comfort, and SANITY’s signature thunderbolt edge.<br/><br/></p>",
+            "button_label": "Shop Storm Shorts",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "row_XP3KHa",
+        "row_RCLYmy",
+        "row_qnLFRp"
+      ],
+      "settings": {
+        "image_height": "small",
+        "desktop_image_width": "medium",
+        "heading_size": "h1",
+        "text_style": "body",
+        "button_style": "secondary",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "center",
+        "image_layout": "alternate-left",
+        "section_color_scheme": "background-1",
+        "row_color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "padding_top": 36,
+        "padding_bottom": 40
+      }
+    },
+    "image_banner_EdtY8D": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_UdALrw": {
+          "type": "heading",
+          "settings": {
+            "heading": "Bestsellers",
+            "heading_size": "h1"
+          }
+        },
+        "text_FyKLVa": {
+          "type": "text",
+          "settings": {
+            "text": "Upgrade your wardrobe with fresh lifting and rest day styles in seasonal shades.",
+            "text_style": "body"
+          }
+        },
+        "buttons_DAqm6q": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "SHOP NOW",
+            "button_link_1": "shopify://products/⚡-sanity-ribbed-tank",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_UdALrw",
+        "text_FyKLVa",
+        "buttons_DAqm6q"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Apr_15_2025_03_45_21_AM.png",
+        "image_overlay_opacity": 0,
+        "image_height": "large",
+        "desktop_content_position": "middle-left",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "collection_list_Qx6Cae": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_Tqq8Hg": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "frontpage"
+          }
+        },
+        "featured_collection_cC9BX7": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "summer-collection"
+          }
+        },
+        "featured_collection_wce8bT": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "t-shirts"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_Tqq8Hg",
+        "featured_collection_cC9BX7",
+        "featured_collection_wce8bT"
+      ],
+      "settings": {
+        "title": "Collections",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "background-1",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_dhd4AR": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_FQLxxp": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Apr_15_2025_03_45_21_AM.png",
+            "title": "Engineered Performance",
+            "text": "<p><br/>Crafted from high‑stretch, moisture‑wicking fabrics that move with you, Sanity gear delivers next‑level breathability and support so you can crush every rep, sprint, or stretch.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_zKfVmj": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Apr_15_2025_02_38_35_AM.png",
+            "title": "Planet‑Smart Construction",
+            "text": "<p><br/>We source recycled and low‑impact materials without ever sacrificing durability or comfort—because looking good shouldn’t cost the earth.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_CfzdYW": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Apr_15_2025_03_41_40_AM.png",
+            "title": "Community‑Fueled Drive",
+            "text": "<p><br/>Join a global tribe of athletes, creators, and do‑ers who inspire each other every day—because when one of us wins, we all win.<br/><br/></p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_FQLxxp",
+        "column_zKfVmj",
+        "column_CfzdYW"
+      ],
+      "settings": {
+        "title": "WHY SANITY?",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "background-1",
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "image_banner_p8ACRb",
+    "featured_collection",
+    "multirow_mPPgDM",
+    "image_banner_EdtY8D",
+    "collection_list_Qx6Cae",
+    "multicolumn_dhd4AR"
+  ]
+}
