@@ -1,6 +1,404 @@
-{% schema %}
-  {
-    "name": "Section name",
-    "settings": []
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'collection-tshirts.css' | asset_url | stylesheet_tag }}
+
+<link
+  rel="preload"
+  href="{{ 'component-rte.css' | asset_url }}"
+  as="style"
+  onload="this.onload=null;this.rel='stylesheet'"
+>
+
+{%- if section.settings.enable_quick_add -%}
+  <link rel="stylesheet" href="{{ 'quick-add.css' | asset_url }}" media="print" onload="this.media='all'">
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+<noscript>{{ 'component-rte.css' | asset_url | stylesheet_tag }}</noscript>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="collection-tshirts-page section-{{ section.id }}-padding">
+  <div class="collection-header">
+    <h1 class="collection-title">{{ collection.title }}</h1>
+    <div class="collection-description">{{ collection.description }}</div>
+    <div class="product-count">{{ collection.products_count }} Products</div>
+  </div>
+
+  <!-- Category Showcase Section -->
+  <div class="category-showcase">
+    <h2 class="showcase-heading">SHOP BY COLLECTION</h2>
+    <div class="category-grid">
+      {% for block in section.blocks %}
+        {% if block.type == 'category' %}
+          <div class="category-item">
+            <a href="{{ block.settings.category_link }}">
+              <div class="category-image">
+                <img src="{{ block.settings.category_image | img_url: '500x500', crop: 'center' }}" alt="{{ block.settings.category_name }}">
+              </div>
+              <div class="category-info">
+                <h3 class="category-name">{{ block.settings.category_name }}</h3>
+                <p class="category-description">{{ block.settings.category_description }}</p>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="collection-content">
+    <!-- Filter and Sort Section -->
+    {% if section.settings.enable_filtering or section.settings.enable_sorting %}
+      <div class="filter-sort-wrapper">
+        <div class="filter-sort-container">
+          <div class="filter-button-container">
+            <button class="filter-button">FILTER & SORT</button>
+          </div>
+          
+          {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+          <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+          <aside
+            aria-labelledby="verticalTitle"
+            class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+            id="main-collection-filters"
+            data-id="{{ section.id }}"
+          >
+            {% render 'facets',
+              results: collection,
+              enable_filtering: section.settings.enable_filtering,
+              enable_sorting: section.settings.enable_sorting,
+              filter_type: section.settings.filter_type
+            %}
+          </aside>
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Collection Description Box -->
+    <div class="collection-info-box">
+      <div class="collection-info-content">
+        <h2 class="collection-info-title">T-SHIRTS & TOPS</h2>
+        <p class="collection-info-text">
+          Enjoy a style personal best for every workout with our men's workout tops, designed for high fitness performance and to give you the confidence to feel as good as you look. Our workout shirts ensure a flawless fit in a range of on-trend cuts, colours and designs to suit every shape and need. With sweat-wicking and breathable fabrics, you'll be perfectly-equipped to smash every workout.
+        </p>
+        <div class="collection-info-links">
+          <a href="/collections/oversized-t-shirts">Oversized T-Shirts</a> | 
+          <a href="/collections/long-sleeve-gym-tops">Long Sleeve Gym Tops</a> | 
+          <a href="/collections/hoodies">Hoodies</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid-container" id="ProductGridContainer">
+      {%- paginate collection.products by section.settings.products_per_page -%}
+        {%- if collection.products.size == 0 -%}
+          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+            <div class="loading-overlay gradient"></div>
+            <div class="title-wrapper center">
+              <h2 class="title title--primary">
+                {{ 'sections.collection_template.empty' | t -}}
+                <br>
+                {{
+                  'sections.collection_template.use_fewer_filters_html'
+                  | t: link: collection.url, class: 'underlined-link link'
+                }}
+              </h2>
+            </div>
+          </div>
+        {%- else -%}
+          <div class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}">
+            <div class="loading-overlay gradient"></div>
+
+            <ul
+              id="product-grid"
+              data-id="{{ section.id }}"
+              class="
+                grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
+                grid--{{ section.settings.columns_desktop }}-col-desktop
+              "
+            >
+              {%- for product in collection.products -%}
+                {% assign lazy_load = false %}
+                {%- if forloop.index > 2 -%}
+                  {%- assign lazy_load = true -%}
+                {%- endif -%}
+                <li class="grid__item">
+                  {% render 'card-product',
+                    card_product: product,
+                    media_aspect_ratio: section.settings.image_ratio,
+                    show_secondary_image: section.settings.show_secondary_image,
+                    show_vendor: section.settings.show_vendor,
+                    show_rating: section.settings.show_rating,
+                    lazy_load: lazy_load,
+                    show_quick_add: section.settings.enable_quick_add,
+                    section_id: section.id
+                  %}
+                </li>
+              {%- endfor -%}
+            </ul>
+
+            {%- if paginate.pages > 1 -%}
+              {% render 'pagination', paginate: paginate, anchor: '' %}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "T-Shirts Collection",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 4,
+      "default": 16,
+      "label": "Products per page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "label": "Number of columns on desktop"
+    },
+    {
+      "type": "header",
+      "content": "Product Card Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt to image"
+        },
+        {
+          "value": "portrait",
+          "label": "Portrait"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ],
+      "default": "adapt",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": true,
+      "label": "Show second image on hover"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "Show product vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "Show product rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "default": true,
+      "label": "Enable quick add"
+    },
+    {
+      "type": "header",
+      "content": "Filtering and Sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable filtering"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "drawer",
+          "label": "Drawer"
+        }
+      ],
+      "default": "drawer",
+      "label": "Filter type"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "default": true,
+      "label": "Enable sorting"
+    },
+    {
+      "type": "header",
+      "content": "Mobile Layout"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "default": "2",
+      "label": "Number of columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 column"
+        },
+        {
+          "value": "2",
+          "label": "2 columns"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category Showcase",
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Category Name",
+          "default": "Graphic Tops"
+        },
+        {
+          "type": "textarea",
+          "id": "category_description",
+          "label": "Category Description",
+          "default": "They're comfortable, they're durable, and they look sick."
+        },
+        {
+          "type": "image_picker",
+          "id": "category_image",
+          "label": "Category Image"
+        },
+        {
+          "type": "url",
+          "id": "category_link",
+          "label": "Category Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "T-Shirts Collection",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Graphic Tops",
+            "category_description": "They're comfortable, they're durable, and they look sick.",
+            "category_link": "/collections/graphic-tops"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Oversized Tops",
+            "category_description": "The most versatile fit around. Instant gains also included.",
+            "category_link": "/collections/oversized-tops"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Compression Fit Tops",
+            "category_description": "Super tight fit, like a second skin. PSA: will make your arms look massive.",
+            "category_link": "/collections/compression-tops"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Running Tops",
+            "category_description": "Lightweight, breathable and ready for your fastest 5k yet.",
+            "category_link": "/collections/running-tops"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Muscle Fit Tops",
+            "category_description": "Physique-accentuating fit to show off all the work you've put in.",
+            "category_link": "/collections/muscle-tops"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_name": "Moisture-Wicking Tops",
+            "category_description": "These wick the sweat away from your skin to keep you cool, dry & focused.",
+            "category_link": "/collections/moisture-wicking-tops"
+          }
+        }
+      ]
+    }
+  ]
+}
 {% endschema %}
