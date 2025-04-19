@@ -1,5 +1,3 @@
-{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
-{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
 {{ 'template-collection.css' | asset_url | stylesheet_tag }}
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
@@ -32,51 +30,15 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-  
-  @media screen and (max-width: 749px) {
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
-    }
-  }
 {%- endstyle -%}
 
-<!-- Collection Banner Section -->
-<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-hero__inner page-width">
-    <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
-      {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
-      {%- endif -%}
-    </div>
-    {%- if section.settings.show_collection_image and collection.image -%}
-      <div class="collection-hero__image-container media gradient">
-        <img
-          srcset="
-            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
-            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
-            {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
-            {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w
-          "
-          src="{{ collection.image | image_url: width: 750 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt=""
-          width="{{ collection.image.width }}"
-          height="{{ collection.image.height }}"
-        >
-      </div>
-    {%- endif -%}
-  </div>
-</div>
-
-<!-- Main Collection Content -->
 <div class="collection-tshirts-page section-{{ section.id }}-padding">
+  <div class="collection-header">
+    <h1 class="collection-title">{{ collection.title }}</h1>
+    <div class="collection-description">{{ collection.description }}</div>
+    <div class="product-count">{{ collection.products_count }} Products</div>
+  </div>
+
   <!-- Category Showcase Section -->
   <div class="category-showcase">
     <h2 class="showcase-heading">SHOP BY COLLECTION</h2>
@@ -100,22 +62,6 @@
   </div>
 
   <div class="collection-content">
-    <!-- Collection Description Box -->
-    <div class="collection-info-box">
-      <div class="collection-info-content">
-        <h2 class="collection-info-title">T-SHIRTS & TOPS</h2>
-        <p class="product-count">{{ collection.products_count }} Products</p>
-        <p class="collection-info-text">
-          Enjoy a style personal best for every workout with our men's workout tops, designed for high fitness performance and to give you the confidence to feel as good as you look. Our workout shirts ensure a flawless fit in a range of on-trend cuts, colours and designs to suit every shape and need. With sweat-wicking and breathable fabrics, you'll be perfectly-equipped to smash every workout.
-        </p>
-        <div class="collection-info-links">
-          <a href="/collections/oversized-t-shirts">Oversized T-Shirts</a> | 
-          <a href="/collections/long-sleeve-gym-tops">Long Sleeve Gym Tops</a> | 
-          <a href="/collections/hoodies">Hoodies</a>
-        </div>
-      </div>
-    </div>
-
     <!-- Filter and Sort Section -->
     {% if section.settings.enable_filtering or section.settings.enable_sorting %}
       <div class="filter-sort-wrapper">
@@ -142,6 +88,21 @@
         </div>
       </div>
     {% endif %}
+
+    <!-- Collection Description Box -->
+    <div class="collection-info-box">
+      <div class="collection-info-content">
+        <h2 class="collection-info-title">T-SHIRTS & TOPS</h2>
+        <p class="collection-info-text">
+          Enjoy a style personal best for every workout with our men's workout tops, designed for high fitness performance and to give you the confidence to feel as good as you look. Our workout shirts ensure a flawless fit in a range of on-trend cuts, colours and designs to suit every shape and need. With sweat-wicking and breathable fabrics, you'll be perfectly-equipped to smash every workout.
+        </p>
+        <div class="collection-info-links">
+          <a href="/collections/oversized-t-shirts">Oversized T-Shirts</a> | 
+          <a href="/collections/long-sleeve-gym-tops">Long Sleeve Gym Tops</a> | 
+          <a href="/collections/hoodies">Hoodies</a>
+        </div>
+      </div>
+    </div>
 
     <!-- Product Grid -->
     <div class="product-grid-container" id="ProductGridContainer">
@@ -207,54 +168,6 @@
   "name": "T-Shirts Collection",
   "class": "section",
   "settings": [
-    {
-      "type": "paragraph",
-      "content": "Collection Banner Settings"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_collection_description",
-      "default": true,
-      "label": "Show collection description"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_collection_image",
-      "default": false,
-      "label": "Show collection image"
-    },
-    {
-      "type": "select",
-      "id": "color_scheme",
-      "options": [
-        {
-          "value": "accent-1",
-          "label": "Accent 1"
-        },
-        {
-          "value": "accent-2",
-          "label": "Accent 2"
-        },
-        {
-          "value": "background-1",
-          "label": "Background 1"
-        },
-        {
-          "value": "background-2",
-          "label": "Background 2"
-        },
-        {
-          "value": "inverse",
-          "label": "Inverse"
-        }
-      ],
-      "default": "background-1",
-      "label": "Color scheme"
-    },
-    {
-      "type": "header",
-      "content": "Product Grid Settings"
-    },
     {
       "type": "range",
       "id": "products_per_page",
