@@ -2,7 +2,6 @@
 {{ 'component-loading-overlay.css' | asset_url | stylesheet_tag }}
 {{ 'component-card.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
-{{ 'collection-tshirts.css' | asset_url | stylesheet_tag }}
 
 <link
   rel="preload"
@@ -32,79 +31,98 @@
   }
 {%- endstyle -%}
 
-<div class="collection-tshirts-page section-{{ section.id }}-padding">
-  <div class="collection-header">
-    <h1 class="collection-title">{{ collection.title }}</h1>
-    <div class="collection-description">{{ collection.description }}</div>
-    <div class="product-count">{{ collection.products_count }} Products</div>
-  </div>
-
-  <!-- Category Showcase Section -->
-  <div class="category-showcase">
-    <h2 class="showcase-heading">SHOP BY COLLECTION</h2>
-    <div class="category-grid">
-      {% for block in section.blocks %}
-        {% if block.type == 'category' %}
-          <div class="category-item">
-            <a href="{{ block.settings.category_link }}">
-              <div class="category-image">
-                <img src="{{ block.settings.category_image | img_url: '500x500', crop: 'center' }}" alt="{{ block.settings.category_name }}">
-              </div>
-              <div class="category-info">
-                <h3 class="category-name">{{ block.settings.category_name }}</h3>
-                <p class="category-description">{{ block.settings.category_description }}</p>
-              </div>
-            </a>
+<div class="section-{{ section.id }}-padding">
+  {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
+  {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
+    <facet-filters-form class="facets facets-vertical-sort page-width small-hide no-js-hidden">
+      <form class="facets-vertical-form" id="FacetSortForm">
+        <div class="facet-filters sorting caption">
+          <div class="facet-filters__field">
+            <h2 class="facet-filters__label caption-large text-body">
+              <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
+            </h2>
+            <div class="select">
+              {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+              <select
+                name="sort_by"
+                class="facet-filters__sort select__select caption-large"
+                id="SortBy"
+                aria-describedby="a11y-refresh-page-message"
+              >
+                {%- for option in collection.sort_options -%}
+                  <option
+                    value="{{ option.value | escape }}"
+                    {% if option.value == sort_by %}
+                      selected="selected"
+                    {% endif %}
+                  >
+                    {{ option.name | escape }}
+                  </option>
+                {%- endfor -%}
+              </select>
+              {% render 'icon-caret' %}
+            </div>
           </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
+          <noscript>
+            <button type="submit" class="facets__button-no-js button button--secondary">
+              {{ 'products.facets.sort_button' | t }}
+            </button>
+          </noscript>
+        </div>
 
-  <div class="collection-content">
-    <!-- Filter and Sort Section -->
-    {% if section.settings.enable_filtering or section.settings.enable_sorting %}
-      <div class="filter-sort-wrapper">
-        <div class="filter-sort-container">
-          <div class="filter-button-container">
-            <button class="filter-button">FILTER & SORT</button>
+        <div class="product-count-vertical light" role="status">
+          <h2 class="product-count__text text-body">
+            <span id="ProductCountDesktop">
+              {%- if collection.results_count -%}
+                {{
+                  'templates.search.results_with_count'
+                  | t: terms: collection.terms, count: collection.results_count
+                }}
+              {%- elsif collection.products_count == collection.all_products_count -%}
+                {{ 'products.facets.product_count_simple' | t: count: collection.products_count }}
+              {%- else -%}
+                {{
+                  'products.facets.product_count'
+                  | t: product_count: collection.products_count, count: collection.all_products_count
+                }}
+              {%- endif -%}
+            </span>
+          </h2>
+          <div class="loading-overlay__spinner">
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              class="spinner"
+              viewBox="0 0 66 66"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+            </svg>
           </div>
-          
-          {{ 'component-facets.css' | asset_url | stylesheet_tag }}
-          <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
-          <aside
-            aria-labelledby="verticalTitle"
-            class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
-            id="main-collection-filters"
-            data-id="{{ section.id }}"
-          >
-            {% render 'facets',
-              results: collection,
-              enable_filtering: section.settings.enable_filtering,
-              enable_sorting: section.settings.enable_sorting,
-              filter_type: section.settings.filter_type
-            %}
-          </aside>
         </div>
-      </div>
-    {% endif %}
+      </form>
+    </facet-filters-form>
+  {%- endif -%}
 
-    <!-- Collection Description Box -->
-    <div class="collection-info-box">
-      <div class="collection-info-content">
-        <h2 class="collection-info-title">T-SHIRTS & TOPS</h2>
-        <p class="collection-info-text">
-          Enjoy a style personal best for every workout with our men's workout tops, designed for high fitness performance and to give you the confidence to feel as good as you look. Our workout shirts ensure a flawless fit in a range of on-trend cuts, colours and designs to suit every shape and need. With sweat-wicking and breathable fabrics, you'll be perfectly-equipped to smash every workout.
-        </p>
-        <div class="collection-info-links">
-          <a href="/collections/oversized-t-shirts">Oversized T-Shirts</a> | 
-          <a href="/collections/long-sleeve-gym-tops">Long Sleeve Gym Tops</a> | 
-          <a href="/collections/hoodies">Hoodies</a>
-        </div>
-      </div>
-    </div>
+  <div class="{% if section.settings.filter_type == 'vertical' %} facets-vertical page-width{% endif %}">
+    {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+    {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
+      <aside
+        aria-labelledby="verticalTitle"
+        class="facets-wrapper{% unless section.settings.enable_filtering %} facets-wrapper--no-filters{% endunless %}{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}"
+        id="main-collection-filters"
+        data-id="{{ section.id }}"
+      >
+        {% render 'facets',
+          results: collection,
+          enable_filtering: section.settings.enable_filtering,
+          enable_sorting: section.settings.enable_sorting,
+          filter_type: section.settings.filter_type
+        %}
+      </aside>
+    {%- endif -%}
 
-    <!-- Product Grid -->
     <div class="product-grid-container" id="ProductGridContainer">
       {%- paginate collection.products by section.settings.products_per_page -%}
         {%- if collection.products.size == 0 -%}
@@ -165,7 +183,7 @@
 
 {% schema %}
 {
-  "name": "T-Shirts Collection",
+  "name": "t:sections.main-collection-product-grid.name",
   "class": "section",
   "settings": [
     {
@@ -175,7 +193,7 @@
       "max": 24,
       "step": 4,
       "default": 16,
-      "label": "Products per page"
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
     },
     {
       "type": "range",
@@ -184,11 +202,11 @@
       "max": 5,
       "step": 1,
       "default": 4,
-      "label": "Number of columns on desktop"
+      "label": "t:sections.main-collection-product-grid.settings.columns_desktop.label"
     },
     {
       "type": "header",
-      "content": "Product Card Settings"
+      "content": "t:sections.main-collection-product-grid.settings.header__3.content"
     },
     {
       "type": "select",
@@ -196,53 +214,55 @@
       "options": [
         {
           "value": "adapt",
-          "label": "Adapt to image"
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
         },
         {
           "value": "portrait",
-          "label": "Portrait"
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
         },
         {
           "value": "square",
-          "label": "Square"
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
         }
       ],
       "default": "adapt",
-      "label": "Image ratio"
+      "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
     },
     {
       "type": "checkbox",
       "id": "show_secondary_image",
-      "default": true,
-      "label": "Show second image on hover"
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
     },
     {
       "type": "checkbox",
       "id": "show_vendor",
       "default": false,
-      "label": "Show product vendor"
+      "label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
     },
     {
       "type": "checkbox",
       "id": "show_rating",
       "default": false,
-      "label": "Show product rating"
+      "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+      "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
     },
     {
       "type": "checkbox",
       "id": "enable_quick_add",
-      "default": true,
-      "label": "Enable quick add"
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.enable_quick_buy.label"
     },
     {
       "type": "header",
-      "content": "Filtering and Sorting"
+      "content": "t:sections.main-collection-product-grid.settings.header__1.content"
     },
     {
       "type": "checkbox",
       "id": "enable_filtering",
       "default": true,
-      "label": "Enable filtering"
+      "label": "t:sections.main-collection-product-grid.settings.enable_filtering.label",
+      "info": "t:sections.main-collection-product-grid.settings.enable_filtering.info"
     },
     {
       "type": "select",
@@ -250,49 +270,50 @@
       "options": [
         {
           "value": "horizontal",
-          "label": "Horizontal"
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__1.label"
         },
         {
           "value": "vertical",
-          "label": "Vertical"
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__2.label"
         },
         {
           "value": "drawer",
-          "label": "Drawer"
+          "label": "t:sections.main-collection-product-grid.settings.filter_type.options__3.label"
         }
       ],
-      "default": "drawer",
-      "label": "Filter type"
+      "default": "horizontal",
+      "label": "t:sections.main-collection-product-grid.settings.filter_type.label",
+      "info": "t:sections.main-collection-product-grid.settings.filter_type.info"
     },
     {
       "type": "checkbox",
       "id": "enable_sorting",
       "default": true,
-      "label": "Enable sorting"
+      "label": "t:sections.main-collection-product-grid.settings.enable_sorting.label"
     },
     {
       "type": "header",
-      "content": "Mobile Layout"
+      "content": "t:sections.main-collection-product-grid.settings.header_mobile.content"
     },
     {
       "type": "select",
       "id": "columns_mobile",
       "default": "2",
-      "label": "Number of columns on mobile",
+      "label": "t:sections.main-collection-product-grid.settings.columns_mobile.label",
       "options": [
         {
           "value": "1",
-          "label": "1 column"
+          "label": "t:sections.main-collection-product-grid.settings.columns_mobile.options__1.label"
         },
         {
           "value": "2",
-          "label": "2 columns"
+          "label": "t:sections.main-collection-product-grid.settings.columns_mobile.options__2.label"
         }
       ]
     },
     {
       "type": "header",
-      "content": "Section Padding"
+      "content": "t:sections.all.padding.section_padding_heading"
     },
     {
       "type": "range",
@@ -301,7 +322,7 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding top",
+      "label": "t:sections.all.padding.padding_top",
       "default": 36
     },
     {
@@ -311,93 +332,8 @@
       "max": 100,
       "step": 4,
       "unit": "px",
-      "label": "Padding bottom",
+      "label": "t:sections.all.padding.padding_bottom",
       "default": 36
-    }
-  ],
-  "blocks": [
-    {
-      "type": "category",
-      "name": "Category Showcase",
-      "settings": [
-        {
-          "type": "text",
-          "id": "category_name",
-          "label": "Category Name",
-          "default": "Graphic Tops"
-        },
-        {
-          "type": "textarea",
-          "id": "category_description",
-          "label": "Category Description",
-          "default": "They're comfortable, they're durable, and they look sick."
-        },
-        {
-          "type": "image_picker",
-          "id": "category_image",
-          "label": "Category Image"
-        },
-        {
-          "type": "url",
-          "id": "category_link",
-          "label": "Category Link"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "T-Shirts Collection",
-      "blocks": [
-        {
-          "type": "category",
-          "settings": {
-            "category_name": "Graphic Tops",
-            "category_description": "They're comfortable, they're durable, and they look sick.",
-            "category_link": "/collections/graphic-tops"
-          }
-        },
-        {
-          "type": "category",
-          "settings": {
-            "category_name": "Oversized Tops",
-            "category_description": "The most versatile fit around. Instant gains also included.",
-            "category_link": "/collections/oversized-tops"
-          }
-        },
-        {
-          "type": "category",
-          "settings": {
-            "category_name": "Compression Fit Tops",
-            "category_description": "Super tight fit, like a second skin. PSA: will make your arms look massive.",
-            "category_link": "/collections/compression-tops"
-          }
-        },
-        {
-          "type": "category",
-          "settings": {
-            "category_name": "Running Tops",
-            "category_description": "Lightweight, breathable and ready for your fastest 5k yet.",
-            "category_link": "/collections/running-tops"
-          }
-        },
-        {
-          "type": "category",
-          "settings": {
-            "category_name": "Muscle Fit Tops",
-            "category_description": "Physique-accentuating fit to show off all the work you've put in.",
-            "category_link": "/collections/muscle-tops"
-          }
-        },
-        {
-          "type": "category",
-          "settings": {
-            "category_name": "Moisture-Wicking Tops",
-            "category_description": "These wick the sweat away from your skin to keep you cool, dry & focused.",
-            "category_link": "/collections/moisture-wicking-tops"
-          }
-        }
-      ]
     }
   ]
 }
