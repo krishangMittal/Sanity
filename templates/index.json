@@ -38,7 +38,7 @@
       "settings": {
         "image": "shopify://shop_images/thunder.gif",
         "image_overlay_opacity": 40,
-        "image_height": "small",
+        "image_height": "large",
         "desktop_content_position": "middle-center",
         "show_text_box": false,
         "desktop_content_alignment": "center",
