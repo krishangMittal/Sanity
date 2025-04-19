@@ -173,7 +173,60 @@ html, body {
   transition: filter 0.3s ease !important;
 }
 
+/* Adding blur to facets and sort form elements */
+.mega-menu-blur-active .facets-vertical-form,
+.mega-menu-blur-active .facet-filters,
+.mega-menu-blur-active .facet-filters__field,
+.mega-menu-blur-active .select,
+.mega-menu-blur-active .product-count-vertical,
+.mega-menu-blur-active .facets-container,
+.mega-menu-blur-active .facets__form-vertical,
+.mega-menu-blur-active .active-facets,
+.mega-menu-blur-active .facets__disclosure-vertical,
+.mega-menu-blur-active .facets__summary,
+.mega-menu-blur-active .facets__display-vertical,
+.mega-menu-blur-active fieldset.facets-wrap {
+  filter: blur(5px) !important;
+  transition: filter 0.3s ease !important;
+}
 
+/* Ensure the select dropdown and icons are also blurred */
+.mega-menu-blur-active #SortBy,
+.mega-menu-blur-active .facet-filters__sort,
+.mega-menu-blur-active .icon-caret {
+  filter: blur(5px) !important;
+  transition: filter 0.3s ease !important;
+}
+
+/* Add blur to checkboxes and labels within facets */
+.mega-menu-blur-active .facet-checkbox,
+.mega-menu-blur-active .list-menu__item,
+.mega-menu-blur-active .facets__item {
+  filter: blur(5px) !important;
+  transition: filter 0.3s ease !important;
+}
+
+/* Add blur to price range inputs */
+.mega-menu-blur-active price-range,
+.mega-menu-blur-active .field,
+.mega-menu-blur-active .field__input,
+.mega-menu-blur-active .field__label {
+  filter: blur(5px) !important;
+  transition: filter 0.3s ease !important;
+}
+
+/* Add blur to mobile facets */
+.mega-menu-blur-active .mobile-facets__wrapper,
+.mega-menu-blur-active .mobile-facets__disclosure,
+.mega-menu-blur-active .mobile-facets__summary,
+.mega-menu-blur-active .mobile-facets__inner,
+.mega-menu-blur-active .mobile-facets__header,
+.mega-menu-blur-active .mobile-facets__main,
+.mega-menu-blur-active .mobile-facets__footer,
+.mega-menu-blur-active .mobile-facets__details {
+  filter: blur(5px) !important;
+  transition: filter 0.3s ease !important;
+}
 
 .mega-menu-blur-active .banner::before,
 .mega-menu-blur-active .collection::before {
@@ -203,7 +256,21 @@ html, body {
   transition: filter 0.3s ease-in-out;
 }
 
+/* Target the multirow section to make it full-width */
+.multirow.section-template--16895379407018__multirow_mPPgDM-padding .multirow__inner.page-width {
+  max-width: 100% !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  width: 100%;
+}
 
+/* Also remove any width restrictions from child elements if needed */
+.multirow.section-template--16895379407018__multirow_mPPgDM-padding .image-with-text__grid {
+  width: 100%;
+  max-width: 100%;
+}
 
 #mega-menu-blur-overlay {
   position: fixed;
