@@ -60,7 +60,7 @@
 .mega-menu__link {
   color: rgba(var(--color-foreground), 0.75);
   display: block !important;
-  font-size: 14px !important;
+  font-size: 22px !important;
   line-height: 1.4;
   padding: 5px 0 !important;
   margin-bottom: 5px !important;
@@ -73,7 +73,7 @@
 .mega-menu__link--level-2 {
   text-transform: uppercase !important;
   font-weight: 700 !important;
-  font-size: 14px !important;
+  font-size: 20px !important;
   letter-spacing: 0.5px !important;
   margin-bottom: 15px !important;
   display: block !important;
