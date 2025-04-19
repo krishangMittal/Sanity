@@ -1,0 +1,293 @@
+/* T-Shirts Collection Styling */
+.collection-tshirts-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+/* Collection Header */
+.collection-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.collection-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+}
+
+.collection-description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-count {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Category Showcase */
+.category-showcase {
+  margin-bottom: 50px;
+}
+
+.showcase-heading {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 15px;
+}
+
+.category-item {
+  position: relative;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  border-radius: 0px;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+}
+
+.category-image {
+  width: 100%;
+  aspect-ratio: 1 / 1.5;
+  overflow: hidden;
+  background-color: #f8f8f8;
+}
+
+.category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.category-item:hover .category-image img {
+  transform: scale(1.05);
+}
+
+.category-info {
+  text-align: left;
+  padding: 15px 0;
+}
+
+.category-name {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 5px;
+  text-transform: uppercase;
+}
+
+.category-description {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+  color: #444;
+}
+
+/* Filter & Sort */
+.filter-sort-wrapper {
+  margin-bottom: 20px;
+}
+
+.filter-sort-container {
+  background-color: #f8f8f8;
+  padding: 15px 20px;
+  border-radius: 0px;
+}
+
+.filter-button-container {
+  text-align: left;
+}
+
+.filter-button {
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.filter-button::before {
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="5" x2="12" y2="5"></line><line x1="2" y1="10" x2="14" y2="10"></line></svg>');
+  background-repeat: no-repeat;
+  margin-right: 8px;
+}
+
+/* Collection Info Box */
+.collection-info-box {
+  background-color: #f8f8f8;
+  padding: 30px;
+  margin-bottom: 30px;
+  border-radius: 0px;
+}
+
+.collection-info-content {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.collection-info-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 15px;
+  text-transform: uppercase;
+}
+
+.collection-info-text {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.collection-info-links {
+  font-size: 14px;
+}
+
+.collection-info-links a {
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.collection-info-links a:hover {
+  text-decoration: underline;
+}
+
+/* Product Grid */
+.product-grid {
+  margin-top: 30px;
+}
+
+.grid__item {
+  padding-bottom: 30px;
+}
+
+.card-product {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-product .card__inner {
+  flex-grow: 1;
+}
+
+.card-product .card__media {
+  margin-bottom: 10px;
+}
+
+.card-product .card__content {
+  padding: 10px 0;
+}
+
+.card-product .card__information {
+  padding: 0;
+}
+
+.card-product .card__heading {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.card-product .price {
+  font-size: 14px;
+}
+
+.card-product .price__regular {
+  font-weight: 600;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.pagination__list {
+  display: inline-flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination__item {
+  margin: 0 5px;
+}
+
+.pagination__link {
+  display: inline-block;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.pagination__link--current {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+/* Media Queries */
+@media screen and (max-width: 990px) {
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .collection-title {
+    font-size: 24px;
+  }
+  
+  .showcase-heading {
+    font-size: 20px;
+  }
+  
+  .collection-info-box {
+    padding: 20px;
+  }
+  
+  .collection-info-title {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+}
