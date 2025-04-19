@@ -1,3 +1,261 @@
+/* Mega Menu Base Styling */
+.mega-menu {
+  position: static;
+}
+
+.mega-menu__content {
+  background-color: rgb(var(--color-background));
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  left: 0;
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  width: 100% !important;
+  z-index: 100;
+}
+
+.shopify-section-header-sticky .mega-menu__content {
+  max-height: calc(100vh - var(--header-bottom-position-desktop, 20rem) - 4rem);
+}
+
+.header-wrapper--border-bottom .mega-menu__content {
+  border-top: 0;
+}
+
+.js .mega-menu__content {
+  opacity: 0;
+  transform: translateY(-1.5rem);
+}
+
+.mega-menu[open] .mega-menu__content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mega Menu List Styling */
+.mega-menu__list {
+  list-style-type: none !important;
+  width: 75% !important;
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Create columns for the mega menu */
+.mega-menu__list > li {
+  width: 200px;
+  margin-bottom: 20px !important;
+  padding: 0 !important;
+  flex: 0 0 auto !important;
+  max-width: none !important;
+  margin-right: 0 !important;
+}
+
+/* Links Styling */
+.mega-menu__link {
+  color: rgba(var(--color-foreground), 0.75);
+  display: block !important;
+  font-size: 13px !important;
+  line-height: calc(1 + 0.3 / var(--font-body-scale));
+  padding: 5px 0 !important;
+  margin-bottom: 5px !important;
+  text-decoration: none;
+  transition: text-decoration var(--duration-short) ease;
+  white-space: normal !important;
+  text-align: left !important;
+}
+
+/* Header Links Styling */
+.mega-menu__link--level-2 {
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.5px !important;
+  margin-bottom: 15px !important;
+  display: block !important;
+  color: rgb(var(--color-foreground));
+}
+
+.mega-menu__link--level-2:not(:only-child) {
+  margin-bottom: 15px !important;
+}
+
+/* Hover States */
+.mega-menu__link:hover,
+.mega-menu__link--active {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+}
+
+.mega-menu__link--active:hover {
+  text-decoration-thickness: 0.2rem;
+}
+
+/* Nested Lists */
+.list-unstyled {
+  padding-left: 0 !important;
+  margin-top: 8px !important;
+  text-align: left !important;
+}
+
+.list-unstyled > li {
+  margin-bottom: 5px !important;
+}
+
+/* Featured Section Styling */
+.mega-menu__content::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  background-color: rgba(var(--color-foreground), 0.03);
+  z-index: -1;
+}
+
+.mega-menu__content::before {
+  content: 'FEATURED';
+  position: absolute;
+  right: 12.5%;
+  top: 40px;
+  transform: translateX(50%);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+}
+
+/* Featured Images Container */
+.mega-menu-featured-images {
+  position: absolute;
+  right: 0;
+  top: 80px;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+/* Featured Image Items */
+.mega-menu-featured-item {
+  width: 100%;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+}
+
+.mega-menu-featured-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.mega-menu-featured-item:hover img {
+  transform: scale(1.05);
+}
+
+.mega-menu-featured-label {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 16px;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Special Trending Label (if needed) */
+.mega-menu__list > li:first-child > .mega-menu__link--level-2.trending {
+  color: #fca311 !important;
+  letter-spacing: 1px !important;
+  border-bottom: 2px solid #fca311 !important;
+}
+
+/* Mobile & Responsive Adjustments */
+@media screen and (max-width: 989px) {
+  .mega-menu__content {
+    flex-direction: column;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  
+  .mega-menu__list {
+    width: 100% !important;
+  }
+  
+  .mega-menu__content::after,
+  .mega-menu__content::before {
+    display: none;
+  }
+  
+  .mega-menu-featured-images {
+    position: static;
+    width: 100%;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  .mega-menu-featured-item {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}
+
+/* Tablet Adjustments */
+@media screen and (min-width: 990px) and (max-width: 1200px) {
+  .mega-menu__list {
+    width: 70% !important;
+    column-gap: 20px;
+  }
+  
+  .mega-menu__list > li {
+    width: 160px;
+  }
+  
+  .mega-menu-featured-images {
+    width: 30%;
+  }
+  
+  .mega-menu__content::after {
+    width: 30%;
+  }
+  
+  .mega-menu__content::before {
+    right: 15%;
+  }
+}
+
+/* Large Screen Enhancements */
+@media screen and (min-width: 1400px) {
+  .mega-menu__list {
+    max-width: 1200px;
+    margin: 0 auto !important;
+  }
+  
+  .mega-menu-featured-images {
+    right: calc((100% - 1200px) / 2);
+  }
+}
+
 /* Mega Menu Layout */
 .mega-menu__layout {
   display: flex;
