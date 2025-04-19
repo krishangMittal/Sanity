@@ -54,6 +54,7 @@ html, body {
   margin-left: auto;
   flex-shrink: 0; / Prevent icons from shrinking /
 }
+
 / Fix the menu display on mobile /
 @media screen and (max-width: 989px) {
   / Hide the desktop navigation on mobile */
