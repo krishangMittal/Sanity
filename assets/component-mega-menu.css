@@ -142,16 +142,19 @@
 
 /* Featured Image Items */
 .mega-menu-featured-item {
-  width: 100%;
+  width: 80%;
   position: relative;
   border-radius: 4px;
   overflow: hidden;
-  margin-top: 30px;
+  margin-top: 15px;
+  max-width: 150px; /* Adjust this value as needed */
+  /* You can also add max-height if desired */
+  max-height: 100px; /* Adjust this value as needed */
 }
 
 .mega-menu-featured-item img {
-  width: 100%;
-  height: auto;
+  width: 80%;
+  height: a;
   display: block;
   transition: transform 0.3s ease;
 }
