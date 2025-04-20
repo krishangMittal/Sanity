@@ -2,68 +2,6 @@
 // Add this flag at the top of the file
 let isProcessingAddToCart = false;
 
-// Then modify the form submit handler
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-  
-  // Skip if already processing an add to cart request
-  if (isProcessingAddToCart) return;
-  
-  // Set the flag to prevent multiple submissions
-  isProcessingAddToCart = true;
-  
-  // Show loading state
-  const submitButton = form.querySelector('[type="submit"]');
-  const originalText = submitButton ? submitButton.textContent : '';
-  if (submitButton) {
-    submitButton.textContent = 'Adding...';
-    submitButton.disabled = true;
-  }
-  
-  // Add to cart using fetch
-  fetch('/cart/add.js', {
-    method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'X-Requested-With': 'XMLHttpRequest'
-    },
-    body: new URLSearchParams(new FormData(form))
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Reset button
-    if (submitButton) {
-      submitButton.textContent = originalText;
-      submitButton.disabled = false;
-    }
-    
-    // Wait a bit to ensure cart is updated
-    setTimeout(() => {
-      forceRefreshCart();
-      
-      // Open cart drawer
-      const cartDrawer = document.querySelector('cart-drawer');
-      if (cartDrawer) {
-        cartDrawer.classList.add('animate', 'active');
-        document.body.classList.add('overflow-hidden');
-      }
-      
-      // Reset the processing flag
-      isProcessingAddToCart = false;
-    }, 500);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    if (submitButton) {
-      submitButton.textContent = originalText;
-      submitButton.disabled = false;
-    }
-    
-    // Reset the processing flag
-    isProcessingAddToCart = false;
-  });
-});
 
 
 document.addEventListener('DOMContentLoaded', function() {
