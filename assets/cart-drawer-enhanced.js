@@ -111,51 +111,35 @@ document.addEventListener('DOMContentLoaded', function() {
   /**
    * Refresh cart contents and open drawer
    */
-  function refreshCart() {
-    fetch('/?sections=cart-drawer,cart-icon-bubble')
-      .then(response => response.json())
-      .then(sections => {
-        // Update cart drawer HTML
-        if (sections['cart-drawer']) {
-          const cartDrawerElement = document.getElementById('CartDrawer');
-          const parsedDrawer = new DOMParser()
-            .parseFromString(sections['cart-drawer'], 'text/html')
-            .querySelector('#CartDrawer');
+// Then modify your refreshCart function
+function refreshCart() {
+  // First ensure the cart is loaded
+  ensureCartIsLoaded().then(cart => {
+    // Only proceed if we got valid cart data
+    if (cart) {
+      fetch('/?sections=cart-drawer,cart-icon-bubble')
+        .then(response => response.json())
+        .then(sections => {
+          // Rest of your existing refreshCart code...
           
-          if (cartDrawerElement && parsedDrawer) {
-            cartDrawerElement.innerHTML = parsedDrawer.innerHTML;
-          }
-        }
-        
-        // Update cart icon/bubble count
-        if (sections['cart-icon-bubble']) {
-          const cartIconBubble = document.getElementById('cart-icon-bubble');
-          const parsedIcon = new DOMParser()
-            .parseFromString(sections['cart-icon-bubble'], 'text/html')
-            .querySelector('.shopify-section');
-          
-          if (cartIconBubble && parsedIcon) {
-            cartIconBubble.innerHTML = parsedIcon.innerHTML;
-          }
-        }
-        
-        // Open cart drawer
-        if (cartDrawer && typeof cartDrawer.open === 'function') {
-          cartDrawer.open();
-        } else if (cartDrawer && cartDrawer.classList) {
-          // Fallback if open method is not available
-          cartDrawer.classList.add('animate', 'active');
-          document.body.classList.add('overflow-hidden');
-        }
-        
-        // Re-initialize cart controls after refreshing content
-        initializeCartControls();
-        
-        // Update free shipping bar
-        updateFreeShippingBar();
-      })
-      .catch(error => console.error('Error refreshing cart:', error));
-  }
+          // After updating the cart content, make sure it's visible
+          setTimeout(() => {
+            // Check if cart has items before opening
+            if (cart.items.length > 0) {
+              const cartDrawer = document.querySelector('cart-drawer');
+              if (cartDrawer && typeof cartDrawer.open === 'function') {
+                cartDrawer.open();
+              } else if (cartDrawer && cartDrawer.classList) {
+                cartDrawer.classList.add('animate', 'active');
+                document.body.classList.add('overflow-hidden');
+              }
+            }
+          }, 300); // Small delay to ensure DOM is updated
+        })
+        .catch(error => console.error('Error refreshing cart:', error));
+    }
+  });
+}
   
   /**
    * Initialize quantity inputs and remove buttons
