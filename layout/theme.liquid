@@ -460,7 +460,6 @@ html, body{
     </script>
   {% endif %}
 {% endif %}
-
   </head>
   {% if template == 'index' %}
     {% section 'enter-page' %}
@@ -555,100 +554,6 @@ cardWrappers.forEach((cardWrapper) => {
   cardWrapper.addEventListener('mouseout', function() {
     cardInner.style.outline = 'none';
   });
-});
-
-          // Simple script to fix the cart drawer issues
-document.addEventListener('DOMContentLoaded', function() {
-  // Track if we're processing an add to cart to prevent duplicates
-  let isProcessingAddToCart = false;
-  
-  // Listen for add to cart button clicks
-  const addToCartButtons = document.querySelectorAll('form[action*="/cart/add"] button[type="submit"], form[action*="/cart/add"] input[type="submit"]');
-  
-  addToCartButtons.forEach(button => {
-    button.addEventListener('click', function(event) {
-      // Prevent duplicate processing
-      if (isProcessingAddToCart) return;
-      isProcessingAddToCart = true;
-      
-      setTimeout(function() {
-        // Force refresh the cart drawer after a short delay
-        refreshCartDrawer();
-        isProcessingAddToCart = false;
-      }, 800);
-    });
-  });
-  
-  // Function to refresh cart drawer
-  function refreshCartDrawer() {
-    fetch('/cart.js')
-      .then(response => response.json())
-      .then(cart => {
-        // If cart has items
-        if (cart.item_count > 0) {
-          // Remove is-empty class from all relevant elements
-          const cartDrawer = document.querySelector('cart-drawer');
-          const cartDrawerItems = document.querySelector('cart-drawer-items');
-          const drawerInner = document.querySelector('.drawer__inner');
-          
-          if (cartDrawer) cartDrawer.classList.remove('is-empty');
-          if (cartDrawerItems) cartDrawerItems.classList.remove('is-empty');
-          if (drawerInner) drawerInner.classList.remove('is-empty');
-          
-          // Refresh drawer content
-          fetch('/?sections=cart-drawer')
-            .then(response => response.json())
-            .then(sections => {
-              if (sections['cart-drawer']) {
-                const cartDrawerElement = document.getElementById('CartDrawer');
-                const parsedDrawer = new DOMParser()
-                  .parseFromString(sections['cart-drawer'], 'text/html')
-                  .querySelector('#CartDrawer');
-                
-                if (cartDrawerElement && parsedDrawer) {
-                  cartDrawerElement.innerHTML = parsedDrawer.innerHTML;
-                }
-                
-                // Update free shipping bar if it exists
-                updateFreeShippingBar(cart);
-              }
-            });
-        }
-      });
-  }
-  
-  // Function to update free shipping bar
-  function updateFreeShippingBar(cart) {
-    const freeShippingThreshold = 300000; // ₹3000 in cents
-    const currentCartTotal = cart.total_price;
-    const remainingForFreeShipping = Math.max(0, freeShippingThreshold - currentCartTotal);
-    
-    // Update progress bar width
-    const progressBar = document.querySelector('.free-shipping-progress');
-    if (progressBar) {
-      const progressPercentage = Math.min(100, (currentCartTotal / freeShippingThreshold) * 100);
-      progressBar.style.width = `${progressPercentage}%`;
-    }
-    
-    // Update message
-    const messageElement = document.querySelector('.free-shipping-message');
-    if (messageElement) {
-      if (remainingForFreeShipping > 0) {
-        const formattedAmount = (remainingForFreeShipping / 100).toFixed(2);
-        messageElement.textContent = `You're ₹${formattedAmount} away from Free Standard Shipping`;
-      } else {
-        messageElement.textContent = `You've qualified for Free Standard Shipping!`;
-      }
-    }
-  }
-  
-  // Also refresh cart when clicking cart icon
-  const cartIcon = document.getElementById('cart-icon-bubble');
-  if (cartIcon) {
-    cartIcon.addEventListener('click', function() {
-      setTimeout(refreshCartDrawer, 100);
-    });
-  }
 });
     </script>
     {% endif %}
