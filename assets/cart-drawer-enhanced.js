@@ -1,138 +1,203 @@
 // Enhanced Cart Drawer Functionality
-
-// Make sure DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-  // References to cart elements
+  // References to cart drawer
   const cartDrawer = document.querySelector('cart-drawer');
-  const addToCartForms = document.querySelectorAll('form[action*="/cart/add"]');
-  const cartCheckoutButton = document.getElementById('CartDrawer-Checkout');
   
-  // Fix Add to Cart functionality
-  if (addToCartForms.length > 0) {
-    addToCartForms.forEach(form => {
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        // Show loading state
-        const submitButton = form.querySelector('[type="submit"]');
-        if (submitButton) {
-          const originalText = submitButton.textContent;
-          submitButton.textContent = 'Adding...';
-          submitButton.disabled = true;
+  // Fix Add to Cart functionality by catching all add to cart forms
+  setupAddToCartForms();
+  
+  // Initialize quantity inputs and remove buttons
+  initializeCartControls();
+  
+  // Setup free shipping bar on page load
+  updateFreeShippingBar();
+  
+  /**
+   * Set up add to cart forms to open drawer on submission
+   */
+  function setupAddToCartForms() {
+    const addToCartForms = document.querySelectorAll('form[action*="/cart/add"]');
+    
+    if (addToCartForms.length > 0) {
+      addToCartForms.forEach(form => {
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
           
-          // Use Fetch API to add to cart
-          fetch('/cart/add.js', {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: new URLSearchParams(new FormData(form))
-          })
-          .then(response => response.json())
-          .then(data => {
-            // Reset button state
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
+          // Show loading state on the button
+          const submitButton = form.querySelector('[type="submit"]');
+          if (submitButton) {
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Adding...';
+            submitButton.disabled = true;
             
-            // Update cart and open drawer
-            updateCart();
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-          });
-        }
+            // Use Fetch API to add to cart
+            fetch('/cart/add.js', {
+              method: 'POST',
+              credentials: 'same-origin',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-Requested-With': 'XMLHttpRequest'
+              },
+              body: new URLSearchParams(new FormData(form))
+            })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              // Reset button state
+              submitButton.textContent = originalText;
+              submitButton.disabled = false;
+              
+              // Update cart and open drawer
+              refreshCart();
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              submitButton.textContent = originalText;
+              submitButton.disabled = false;
+              
+              // Display error message if needed
+              const errorContainer = form.querySelector('.product-form__error-message-wrapper');
+              if (errorContainer) {
+                const errorMessage = errorContainer.querySelector('.product-form__error-message');
+                if (errorMessage) {
+                  errorMessage.textContent = 'Error adding item to cart. Please try again.';
+                  errorContainer.classList.remove('hidden');
+                  
+                  // Hide error after 5 seconds
+                  setTimeout(() => {
+                    errorContainer.classList.add('hidden');
+                  }, 5000);
+                }
+              }
+            });
+          }
+        });
       });
-    });
+    }
   }
   
-  // Function to update cart and open drawer
-  function updateCart() {
-    fetch('/cart.js', {
-      credentials: 'same-origin',
-      method: 'GET',
-    })
-    .then(response => response.json())
-    .then(cart => {
-      // Update free shipping progress bar
-      updateFreeShippingProgress(cart);
-      
-      // Refresh cart contents
-      refreshCartContents();
-      
-      // Open cart drawer
-      if (cartDrawer) {
-        cartDrawer.open();
-      }
-    })
-    .catch(error => console.error('Error:', error));
-  }
-  
-  // Function to refresh cart contents
-  function refreshCartContents() {
+  /**
+   * Refresh cart contents and open drawer
+   */
+  function refreshCart() {
     fetch('/?sections=cart-drawer,cart-icon-bubble')
       .then(response => response.json())
       .then(sections => {
-        const cartDrawerElement = document.getElementById('CartDrawer');
-        const cartIconBubble = document.getElementById('cart-icon-bubble');
-        
-        if (cartDrawerElement && sections['cart-drawer']) {
+        // Update cart drawer HTML
+        if (sections['cart-drawer']) {
+          const cartDrawerElement = document.getElementById('CartDrawer');
           const parsedDrawer = new DOMParser()
             .parseFromString(sections['cart-drawer'], 'text/html')
             .querySelector('#CartDrawer');
           
-          if (parsedDrawer) {
+          if (cartDrawerElement && parsedDrawer) {
             cartDrawerElement.innerHTML = parsedDrawer.innerHTML;
           }
         }
         
-        if (cartIconBubble && sections['cart-icon-bubble']) {
+        // Update cart icon/bubble count
+        if (sections['cart-icon-bubble']) {
+          const cartIconBubble = document.getElementById('cart-icon-bubble');
           const parsedIcon = new DOMParser()
             .parseFromString(sections['cart-icon-bubble'], 'text/html')
             .querySelector('.shopify-section');
           
-          if (parsedIcon) {
+          if (cartIconBubble && parsedIcon) {
             cartIconBubble.innerHTML = parsedIcon.innerHTML;
           }
         }
         
-        // Re-initialize quantity inputs and remove buttons after refreshing content
-        initializeCartControls();
-      })
-      .catch(error => console.error('Error:', error));
-  }
-  
-  // Function to initialize cart controls after cart updates
-  function initializeCartControls() {
-    // Initialize quantity inputs
-    document.querySelectorAll('quantity-input').forEach(input => {
-      if (typeof input.initialize === 'function') {
-        input.initialize();
-      }
-    });
-    
-    // Initialize remove buttons
-    document.querySelectorAll('cart-remove-button').forEach(button => {
-      button.addEventListener('click', function() {
-        const lineItem = button.closest('tr');
-        if (lineItem && lineItem.dataset.index) {
-          updateQuantity(lineItem.dataset.index, 0);
+        // Open cart drawer
+        if (cartDrawer && typeof cartDrawer.open === 'function') {
+          cartDrawer.open();
+        } else if (cartDrawer && cartDrawer.classList) {
+          // Fallback if open method is not available
+          cartDrawer.classList.add('animate', 'active');
+          document.body.classList.add('overflow-hidden');
         }
-      });
-    });
+        
+        // Re-initialize cart controls after refreshing content
+        initializeCartControls();
+        
+        // Update free shipping bar
+        updateFreeShippingBar();
+      })
+      .catch(error => console.error('Error refreshing cart:', error));
   }
   
-  // Function to update item quantity
-  function updateQuantity(line, quantity) {
+  /**
+   * Initialize quantity inputs and remove buttons
+   */
+  function initializeCartControls() {
+    // Set up cart quantity change handlers
+    const quantityInputs = document.querySelectorAll('.quantity__input');
+    if (quantityInputs.length > 0) {
+      quantityInputs.forEach(input => {
+        input.addEventListener('change', debounce(function() {
+          const line = input.dataset.index;
+          const quantity = parseInt(input.value);
+          
+          if (line && quantity >= 0) {
+            updateCartItemQuantity(line, quantity);
+          }
+        }, 300));
+      });
+    }
+    
+    // Set up quantity button handlers
+    const quantityButtons = document.querySelectorAll('.quantity__button');
+    if (quantityButtons.length > 0) {
+      quantityButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const input = button.parentElement.querySelector('.quantity__input');
+          if (!input) return;
+          
+          const currentValue = parseInt(input.value);
+          const isPlus = button.name === 'plus';
+          const newValue = isPlus ? currentValue + 1 : Math.max(currentValue - 1, 1);
+          
+          input.value = newValue;
+          input.dispatchEvent(new Event('change'));
+        });
+      });
+    }
+    
+    // Set up remove buttons
+    const removeButtons = document.querySelectorAll('cart-remove-button button');
+    if (removeButtons.length > 0) {
+      removeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const parent = button.closest('cart-remove-button');
+          if (parent && parent.dataset.index) {
+            updateCartItemQuantity(parent.dataset.index, 0);
+          }
+        });
+      });
+    }
+  }
+  
+  /**
+   * Update cart item quantity
+   */
+  function updateCartItemQuantity(line, quantity) {
     const body = JSON.stringify({
       updates: {
         [line]: quantity
       },
       sections: ['cart-drawer', 'cart-icon-bubble']
     });
+    
+    // Show loading spinner on the item being updated
+    const lineItemError = document.getElementById(`CartDrawer-LineItemError-${line}`);
+    const loadingOverlay = document.querySelector(`#CartDrawer-Item-${line} .loading-overlay`);
+    
+    if (loadingOverlay) {
+      loadingOverlay.classList.remove('hidden');
+    }
     
     fetch('/cart/update.js', {
       method: 'POST',
@@ -143,51 +208,79 @@ document.addEventListener('DOMContentLoaded', function() {
       body: body
     })
     .then(response => response.json())
-    .then(data => {
-      updateFreeShippingProgress(data);
-      refreshCartContents();
-    })
-    .catch(error => console.error('Error:', error));
-  }
-  
-  // Update free shipping progress
-  function updateFreeShippingProgress(cart) {
-    // Check if the free shipping elements exist
-    const shippingBarContainer = document.querySelector('.free-shipping-bar-container');
-    if (!shippingBarContainer) return;
-    
-    const freeShippingThreshold = 5000; // $50.00 (in cents)
-    const currentCartTotal = cart.total_price;
-    const remainingForFreeShipping = Math.max(0, freeShippingThreshold - currentCartTotal);
-    
-    // Update progress bar width
-    const progressBar = document.querySelector('.free-shipping-progress');
-    const progressPercentage = Math.min(100, (currentCartTotal / freeShippingThreshold) * 100);
-    
-    if (progressBar) {
-      progressBar.style.width = `${progressPercentage}%`;
-    }
-    
-    // Update message
-    const messageElement = document.querySelector('.free-shipping-message');
-    if (messageElement) {
-      if (remainingForFreeShipping > 0) {
-        const formattedAmount = (remainingForFreeShipping / 100).toFixed(2);
-        messageElement.textContent = `You're $${formattedAmount} away from Free Standard Shipping`;
-      } else {
-        messageElement.textContent = `You've qualified for Free Standard Shipping!`;
+    .then(state => {
+      // Update cart drawer content
+      refreshCart();
+      
+      // Hide loading spinner
+      if (loadingOverlay) {
+        loadingOverlay.classList.add('hidden');
       }
-    }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      
+      // Hide loading spinner
+      if (loadingOverlay) {
+        loadingOverlay.classList.add('hidden');
+      }
+      
+      // Show error message
+      if (lineItemError) {
+        lineItemError.querySelector('.cart-item__error-text').textContent = 
+          'Error updating quantity. Please try again.';
+        lineItemError.classList.remove('hidden');
+        
+        // Hide error after 5 seconds
+        setTimeout(() => {
+          lineItemError.classList.add('hidden');
+        }, 5000);
+      }
+    });
   }
   
-  // Initial setup
-  initializeCartControls();
+  /**
+   * Update free shipping progress bar
+   */
+  function updateFreeShippingBar() {
+    fetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        const freeShippingThreshold = 5000; // $50.00 (in cents) - adjust this value as needed
+        const currentCartTotal = cart.total_price;
+        const remainingForFreeShipping = Math.max(0, freeShippingThreshold - currentCartTotal);
+        
+        // Update progress bar width
+        const progressBar = document.querySelector('.free-shipping-progress');
+        if (progressBar) {
+          const progressPercentage = Math.min(100, (currentCartTotal / freeShippingThreshold) * 100);
+          progressBar.style.width = `${progressPercentage}%`;
+        }
+        
+        // Update message
+        const messageElement = document.querySelector('.free-shipping-message');
+        if (messageElement) {
+          if (remainingForFreeShipping > 0) {
+            const formattedAmount = (remainingForFreeShipping / 100).toFixed(2);
+            messageElement.textContent = `You're $${formattedAmount} away from Free Standard Shipping`;
+          } else {
+            messageElement.textContent = `You've qualified for Free Standard Shipping!`;
+          }
+        }
+      })
+      .catch(error => console.error('Error fetching cart:', error));
+  }
   
-  // Initial cart check to setup free shipping bar
-  fetch('/cart.js')
-    .then(response => response.json())
-    .then(cart => {
-      updateFreeShippingProgress(cart);
-    })
-    .catch(error => console.error('Error:', error));
+  /**
+   * Debounce function to prevent multiple rapid calls
+   */
+  function debounce(fn, delay) {
+    let timeout;
+    return function() {
+      const context = this;
+      const args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn.apply(context, args), delay);
+    };
+  }
 });
