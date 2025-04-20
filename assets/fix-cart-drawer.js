@@ -1,125 +1,79 @@
-// Create a file called fix-cart-drawer.js and add this code
-// Add this flag at the top of the file
-let isProcessingAddToCart = false;
+// fix-cart-drawer.js
+(() => {
+  let isProcessingAddToCart = false;
 
+  async function handleAddToCart(event) {
+    event.preventDefault();
+    if (isProcessingAddToCart) return;
 
+    isProcessingAddToCart = true;
+    const form = event.currentTarget;
+    const submitBtn = form.querySelector('[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : '';
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Function to refresh cart contents
-  function forceRefreshCart() {
-    // Get cart data
-    fetch('/cart.js')
-      .then(response => response.json())
-      .then(cart => {
-        // Skip if cart is empty
-        if (cart.item_count === 0) return;
-        
-        // If cart has items but drawer shows empty, fix it
-        const cartDrawer = document.querySelector('cart-drawer');
-        if (cartDrawer && cartDrawer.classList.contains('is-empty')) {
-          cartDrawer.classList.remove('is-empty');
-          
-          // Also remove is-empty from inner elements
-          const drawerItemsElement = cartDrawer.querySelector('cart-drawer-items');
-          if (drawerItemsElement && drawerItemsElement.classList.contains('is-empty')) {
-            drawerItemsElement.classList.remove('is-empty');
-          }
-          
-          // Force a reload of the cart drawer
-          fetch('/?sections=cart-drawer')
-            .then(response => response.json())
-            .then(sections => {
-              const drawerContent = document.getElementById('CartDrawer');
-              if (drawerContent && sections['cart-drawer']) {
-                const tempElement = document.createElement('div');
-                tempElement.innerHTML = sections['cart-drawer'];
-                const newContent = tempElement.querySelector('#CartDrawer');
-                if (newContent) {
-                  drawerContent.innerHTML = newContent.innerHTML;
-                  
-                  // Update subtotal
-                  const totalElement = document.querySelector('.totals__subtotal-value');
-                  if (totalElement) {
-                    totalElement.textContent = 'Rs. ' + (cart.total_price / 100).toFixed(2);
-                  }
-                  
-                  // Enable checkout button
-                  const checkoutButton = document.getElementById('CartDrawer-Checkout');
-                  if (checkoutButton) {
-                    checkoutButton.disabled = false;
-                  }
-                }
-              }
-            });
-        }
-      });
+    // show loading state
+    if (submitBtn) {
+      submitBtn.textContent = 'Adding…';
+      submitBtn.disabled = true;
+    }
+
+    try {
+      // 1) add to cart
+      await fetch('/cart/add.js', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new URLSearchParams(new FormData(form))
+      }).then(r => r.json());
+
+      // 2) fetch both sections in one call
+      const sections = await fetch('/?sections=cart-drawer,cart-icon-bubble', {
+        credentials: 'same-origin',
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }).then(r => r.json());
+
+      // 3a) replace drawer HTML
+      const drawerWrapper = document.getElementById('CartDrawer');
+      if (drawerWrapper && sections['cart-drawer']) {
+        const temp = document.createElement('div');
+        temp.innerHTML = sections['cart-drawer'];
+        const newDrawer = temp.querySelector('#CartDrawer');
+        drawerWrapper.innerHTML = newDrawer.innerHTML;
+      }
+
+      // 3b) replace bubble HTML
+      const bubble = document.querySelector('#cart-icon-bubble');
+      if (bubble && sections['cart-icon-bubble']) {
+        const temp2 = document.createElement('div');
+        temp2.innerHTML = sections['cart-icon-bubble'];
+        const newBubble = temp2.querySelector('#cart-icon-bubble');
+        bubble.innerHTML = newBubble.innerHTML;
+      }
+
+      // 4) open the drawer
+      const cartDrawerEl = document.querySelector('cart-drawer');
+      if (cartDrawerEl) {
+        // re-run animation & focus trap
+        cartDrawerEl.open(form);
+      }
+    } catch (err) {
+      console.error('Add to cart failed:', err);
+    } finally {
+      // reset button + flag
+      if (submitBtn) {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+      isProcessingAddToCart = false;
+    }
   }
-  
-  // Override the add to cart behavior
-  const addToCartForms = document.querySelectorAll('form[action*="/cart/add"]');
-  
-  if (addToCartForms.length > 0) {
-    addToCartForms.forEach(form => {
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        
-        // Show loading state
-        const submitButton = form.querySelector('[type="submit"]');
-        const originalText = submitButton ? submitButton.textContent : '';
-        if (submitButton) {
-          submitButton.textContent = 'Adding...';
-          submitButton.disabled = true;
-        }
-        
-        // Add to cart using fetch
-        fetch('/cart/add.js', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
-          },
-          body: new URLSearchParams(new FormData(form))
-        })
-        .then(response => response.json())
-        .then(data => {
-          // Reset button
-          if (submitButton) {
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-          }
-          
-          // Wait a bit to ensure cart is updated
-          setTimeout(() => {
-            forceRefreshCart();
-            
-            // Open cart drawer
-            const cartDrawer = document.querySelector('cart-drawer');
-            if (cartDrawer) {
-              cartDrawer.classList.add('animate', 'active');
-              document.body.classList.add('overflow-hidden');
-            }
-          }, 500);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          if (submitButton) {
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-          }
-        });
-      });
-    });
-  }
-  
-  // Also refresh cart when clicking cart icon
-  const cartIcon = document.getElementById('cart-icon-bubble');
-  if (cartIcon) {
-    cartIcon.addEventListener('click', function(event) {
-      forceRefreshCart();
-    }, true);
-  }
-  
-  // Run immediately in case cart already has items
-  forceRefreshCart();
-});
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document
+      .querySelectorAll('form[action*="/cart/add"]')
+      .forEach(form => form.addEventListener('submit', handleAddToCart));
+  });
+})();
