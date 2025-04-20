@@ -5,15 +5,76 @@ class CartDrawer extends HTMLElement {
     this.addEventListener('keyup', (evt) => evt.code === 'Escape' && this.close());
     this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
     this.setHeaderCartIconAccessibility();
+    
+    // Add this new line - force refresh cart when the drawer is initialized
+    this.refreshCart();
+  }
+
+  // Add this new method to refresh the cart
+  refreshCart() {
+    fetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        if (cart.item_count > 0) {
+          // If there are items but the drawer shows empty, refresh it
+          if (this.classList.contains('is-empty')) {
+            this.classList.remove('is-empty');
+            this.querySelector('.drawer__inner').classList.remove('is-empty');
+            
+            // Fetch the updated cart drawer sections
+            fetch('/?sections=cart-drawer,cart-icon-bubble')
+              .then(response => response.json())
+              .then(sections => {
+                this.renderContents({
+                  sections: sections,
+                  id: cart.items[0].id
+                });
+                
+                // Update free shipping bar
+                this.updateFreeShippingBar(cart);
+              });
+          }
+        }
+      })
+      .catch(error => console.error('Error fetching cart:', error));
+  }
+  
+  // Add this method to update the free shipping bar
+  updateFreeShippingBar(cart) {
+    const freeShippingThreshold = 300000; // ₹3000 (in cents)
+    const currentCartTotal = cart.total_price;
+    const remainingForFreeShipping = Math.max(0, freeShippingThreshold - currentCartTotal);
+    
+    // Update progress bar width
+    const progressBar = this.querySelector('.free-shipping-progress');
+    if (progressBar) {
+      const progressPercentage = Math.min(100, (currentCartTotal / freeShippingThreshold) * 100);
+      progressBar.style.width = `${progressPercentage}%`;
+    }
+    
+    // Update message
+    const messageElement = this.querySelector('.free-shipping-message');
+    if (messageElement) {
+      if (remainingForFreeShipping > 0) {
+        const formattedAmount = (remainingForFreeShipping / 100).toFixed(2);
+        messageElement.textContent = `You're ₹${formattedAmount} away from Free Standard Shipping`;
+      } else {
+        messageElement.textContent = `You've qualified for Free Standard Shipping!`;
+      }
+    }
   }
 
   setHeaderCartIconAccessibility() {
     const cartLink = document.querySelector('#cart-icon-bubble');
+    if (!cartLink) return; // Add this check in case the element doesn't exist
+    
     cartLink.setAttribute('role', 'button');
     cartLink.setAttribute('aria-haspopup', 'dialog');
     cartLink.addEventListener('click', (event) => {
       event.preventDefault();
-      this.open(cartLink)
+      // Add this line - refresh cart before opening
+      this.refreshCart();
+      this.open(cartLink);
     });
     cartLink.addEventListener('keydown', (event) => {
       if (event.code.toUpperCase() === 'SPACE') {
@@ -27,6 +88,10 @@ class CartDrawer extends HTMLElement {
     if (triggeredBy) this.setActiveElement(triggeredBy);
     const cartDrawerNote = this.querySelector('[id^="Details-"] summary');
     if (cartDrawerNote && !cartDrawerNote.hasAttribute('role')) this.setSummaryAccessibility(cartDrawerNote);
+    
+    // Refresh cart data before opening
+    this.refreshCart();
+    
     // here the animation doesn't seem to always get triggered. A timeout seem to help
     setTimeout(() => {this.classList.add('animate', 'active')});
 
@@ -39,111 +104,32 @@ class CartDrawer extends HTMLElement {
     document.body.classList.add('overflow-hidden');
   }
 
-  close() {
-    this.classList.remove('active');
-    removeTrapFocus(this.activeElement);
-    document.body.classList.remove('overflow-hidden');
-  }
-
-  setSummaryAccessibility(cartDrawerNote) {
-    cartDrawerNote.setAttribute('role', 'button');
-    cartDrawerNote.setAttribute('aria-expanded', 'false');
-
-    if(cartDrawerNote.nextElementSibling.getAttribute('id')) {
-      cartDrawerNote.setAttribute('aria-controls', cartDrawerNote.nextElementSibling.id);
-    }
-
-    cartDrawerNote.addEventListener('click', (event) => {
-      event.currentTarget.setAttribute('aria-expanded', !event.currentTarget.closest('details').hasAttribute('open'));
-    });
-
-    cartDrawerNote.parentElement.addEventListener('keyup', onKeyUpEscape);
-  }
+  // The rest of your existing methods...
 
   renderContents(parsedState) {
-    this.querySelector('.drawer__inner').classList.contains('is-empty') && this.querySelector('.drawer__inner').classList.remove('is-empty');
+    if (this.querySelector('.drawer__inner').classList.contains('is-empty')) {
+      this.querySelector('.drawer__inner').classList.remove('is-empty');
+    }
     this.productId = parsedState.id;
     this.getSectionsToRender().forEach((section => {
       const sectionElement = section.selector ? document.querySelector(section.selector) : document.getElementById(section.id);
-      sectionElement.innerHTML =
-          this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+      if (sectionElement && parsedState.sections[section.id]) {
+        sectionElement.innerHTML = this.getSectionInnerHTML(parsedState.sections[section.id], section.selector);
+      }
     }));
 
     setTimeout(() => {
       this.querySelector('#CartDrawer-Overlay').addEventListener('click', this.close.bind(this));
       this.open();
+      
+      // Force update the free shipping bar
+      fetch('/cart.js')
+        .then(response => response.json())
+        .then(cart => {
+          this.updateFreeShippingBar(cart);
+        });
     });
   }
-
-  getSectionInnerHTML(html, selector = '.shopify-section') {
-    return new DOMParser()
-      .parseFromString(html, 'text/html')
-      .querySelector(selector).innerHTML;
-  }
-
-  getSectionsToRender() {
-    return [
-      {
-        id: 'cart-drawer',
-        selector: '#CartDrawer'
-      },
-      {
-        id: 'cart-icon-bubble'
-      }
-    ];
-  }
-
-  getSectionDOM(html, selector = '.shopify-section') {
-    return new DOMParser()
-      .parseFromString(html, 'text/html')
-      .querySelector(selector);
-  }
-
-  setActiveElement(element) {
-    this.activeElement = element;
-  }
 }
 
-customElements.define('cart-drawer', CartDrawer);
-
-class CartDrawerItems extends CartItems {
-  getSectionsToRender() {
-    return [
-      {
-        id: 'CartDrawer',
-        section: 'cart-drawer',
-        selector: '.drawer__inner'
-      },
-      {
-        id: 'cart-icon-bubble',
-        section: 'cart-icon-bubble',
-        selector: '.shopify-section'
-      }
-    ];
-  }
-}
-
-
-document.querySelectorAll('.menu-drawer__tabs button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    // deactivate all tabs/panels
-    document.querySelectorAll('.menu-drawer__tabs button')
-      .forEach(b => b.setAttribute('aria-selected','false'));
-    document.querySelectorAll('.menu-drawer__panel')
-      .forEach(p => p.setAttribute('hidden',''));
-
-    // activate this tab + matching panel
-    btn.setAttribute('aria-selected','true');
-    document.getElementById('drawer-panel-' + btn.dataset.tab)
-      .removeAttribute('hidden');
-  });
-});
-
-// close on overlay or close‑button click
-document.querySelectorAll('[data-action="close"]').forEach(el => {
-  el.addEventListener('click', () => {
-    document.getElementById('Details-menu-drawer-container').removeAttribute('open');
-  });
-});
-
-customElements.define('cart-drawer-items', CartDrawerItems);
+// The rest of your code remains the same...
