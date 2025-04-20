@@ -328,7 +328,14 @@
         "settings": {}
       }
     },
-    "content_for_index": []
+    "content_for_index": [],
+    "blocks": {
+      "16437886600928722036": {
+        "type": "shopify://apps/amote/blocks/amote/14aa5bc3-7a5d-47bd-abcb-3baaa5c02f17",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Default": {
