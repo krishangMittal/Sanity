@@ -1,6 +1,4 @@
 class CartDrawer extends HTMLElement {
-
-  
   constructor() {
     super();
 
@@ -124,28 +122,5 @@ class CartDrawerItems extends CartItems {
     ];
   }
 }
-
-
-document.querySelectorAll('.menu-drawer__tabs button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    // deactivate all tabs/panels
-    document.querySelectorAll('.menu-drawer__tabs button')
-      .forEach(b => b.setAttribute('aria-selected','false'));
-    document.querySelectorAll('.menu-drawer__panel')
-      .forEach(p => p.setAttribute('hidden',''));
-
-    // activate this tab + matching panel
-    btn.setAttribute('aria-selected','true');
-    document.getElementById('drawer-panel-' + btn.dataset.tab)
-      .removeAttribute('hidden');
-  });
-});
-
-// close on overlay or close‑button click
-document.querySelectorAll('[data-action="close"]').forEach(el => {
-  el.addEventListener('click', () => {
-    document.getElementById('Details-menu-drawer-container').removeAttribute('open');
-  });
-});
 
 customElements.define('cart-drawer-items', CartDrawerItems);
