@@ -307,15 +307,73 @@ document.querySelectorAll('[data-action="close"]').forEach(el => {
 
 customElements.define('cart-drawer-items', CartDrawerItems);
 
-// Add an event listener to fix cart issues on DOM load
-document.addEventListener('DOMContentLoaded', () => {
-  const cartDrawer = document.querySelector('cart-drawer');
-  if (cartDrawer) {
-    // Force refresh cart on page load
-    setTimeout(() => {
-      if (typeof cartDrawer.refreshCart === 'function') {
-        cartDrawer.refreshCart();
+// The existing code ends with this line
+
+// Add the new code here
+// Directly handle cart additions by listening for the 'add_to_cart' event
+document.addEventListener('click', function(event) {
+  // Check if the clicked element is an add to cart button
+  if (event.target.closest('form[action*="/cart/add"] [type="submit"]')) {
+    const form = event.target.closest('form[action*="/cart/add"]');
+    
+    if (form) {
+      event.preventDefault();
+      
+      // Show loading state on the button
+      const submitButton = form.querySelector('[type="submit"]');
+      const originalText = submitButton ? submitButton.textContent : '';
+      if (submitButton) {
+        submitButton.textContent = 'Adding...';
+        submitButton.disabled = true;
       }
-    }, 500);
+      
+      // Use Fetch API to add to cart
+      fetch('/cart/add.js', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: new URLSearchParams(new FormData(form))
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Reset button state
+        if (submitButton) {
+          submitButton.textContent = originalText;
+          submitButton.disabled = false;
+        }
+        
+        // Force a full cart refresh before opening the drawer
+        fetch('/cart.js')
+          .then(response => response.json())
+          .then(cart => {
+            // Get the cart drawer sections
+            return fetch('/?sections=cart-drawer,cart-icon-bubble')
+              .then(response => response.json())
+              .then(sections => {
+                // Open the cart drawer after a small delay to ensure the content is ready
+                setTimeout(() => {
+                  const cartDrawer = document.querySelector('cart-drawer');
+                  if (cartDrawer) {
+                    // Manually update the cart drawer with the fetched sections
+                    cartDrawer.renderContents({
+                      sections: sections,
+                      id: data.id
+                    });
+                  }
+                }, 300);
+              });
+          });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        if (submitButton) {
+          submitButton.textContent = originalText;
+          submitButton.disabled = false;
+        }
+      });
+    }
   }
-});
+}, true);
