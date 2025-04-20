@@ -1,3 +1,31 @@
+
+function ensureCartIsLoaded() {
+  return new Promise((resolve) => {
+    fetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        if (cart && cart.items) {
+          // Cart is loaded and contains items data
+          resolve(cart);
+        } else {
+          // Try again after a short delay
+          setTimeout(() => {
+            fetch('/cart.js')
+              .then(response => response.json())
+              .then(cart => resolve(cart))
+              .catch(error => {
+                console.error('Error loading cart:', error);
+                resolve(null);
+              });
+          }, 500);
+        }
+      })
+      .catch(error => {
+        console.error('Error loading cart:', error);
+        resolve(null);
+      });
+  });
+}
 // Enhanced Cart Drawer Functionality
 document.addEventListener('DOMContentLoaded', function() {
   // References to cart drawer
