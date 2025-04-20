@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('/cart.js')
       .then(response => response.json())
       .then(cart => {
-        const freeShippingThreshold = 5000; // $50.00 (in cents) - adjust this value as needed
+        const freeShippingThreshold = 300000; // ₹3000 (in cents) - adjust this value as needed
         const currentCartTotal = cart.total_price;
         const remainingForFreeShipping = Math.max(0, freeShippingThreshold - currentCartTotal);
         
@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (messageElement) {
           if (remainingForFreeShipping > 0) {
             const formattedAmount = (remainingForFreeShipping / 100).toFixed(2);
-            messageElement.textContent = `You're $${formattedAmount} away from Free Standard Shipping`;
+            messageElement.textContent = `You're ₹${formattedAmount} away from Free Standard Shipping`;
           } else {
             messageElement.textContent = `You've qualified for Free Standard Shipping!`;
           }
