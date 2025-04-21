@@ -227,6 +227,7 @@ html, body {
 
 /* Add blur to checkboxes and labels within facets */
 .mega-menu-blur-active .facet-checkbox,
+.mega-menu-blur-active .facet-checkbox .title h1,
 .mega-menu-blur-active .facets__item {
   filter: blur(5px) !important;
   transition: filter 0.3s ease !important;
