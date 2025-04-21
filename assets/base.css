@@ -150,6 +150,27 @@ html, body {
   --color-card-hover: var(--color-base-text);
 } */
 
+
+.mega-menu-blur-active .header-wrapper,
+.mega-menu-blur-active .header,
+.mega-menu-blur-active .header__heading,
+.mega-menu-blur-active .header__heading-link,
+.mega-menu-blur-active .header__heading-logo,
+.mega-menu-blur-active .header__icons,
+.mega-menu-blur-active .header__icon,
+.mega-menu-blur-active .header__inline-menu,
+.mega-menu-blur-active .list-menu--inline,
+.mega-menu-blur-active .header__menu-item,
+.mega-menu-blur-active .mega-menu,
+.mega-menu-blur-active .mega-menu__content,
+.mega-menu-blur-active .mega-menu__list,
+.mega-menu-blur-active .mega-menu-featured-images,
+.mega-menu-blur-active .mega-menu-featured-item,
+.mega-menu-blur-active .mega-menu-featured-label {
+  filter: none !important;
+  backdrop-filter: none !important;
+}
+
 .mega-menu-blur-active .multirow__inner,
 .mega-menu-blur-active .multirow__inner * {
   filter: blur(5px) !important;
