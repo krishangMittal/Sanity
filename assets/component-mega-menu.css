@@ -179,21 +179,13 @@
   transform: scale(1.05);
 }
 
-.mega-menu-featured-label {
-  position: absolute;
-  bottom: 15px;
-  left: 0;
+.mega-menu-featured-images h3.featured-title {
   width: 100%;
-  text-align: center;
-  color: white;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 14px; /* Increased from 5px to a more readable size */
-  text-shadow: 0 0 10px rgba(0,0,0,0.5);
-  padding: 8px 0; /* Add some vertical padding */
-  background: rgba(0,0,0,0.4); /* Add a semi-transparent background */
+  text-align: right;
+  margin-top: 0;
+  align-self: flex-end; /* Align to the right edge */
 }
+
 .mega-menu-featured-label {
   /* Keep the existing properties */
   font-size: 14px;
