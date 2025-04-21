@@ -224,10 +224,22 @@ html, body {
   filter: blur(5px) !important;
   transition: filter 0.3s ease !important;
 }
+/* Override blur for header navigation */
+.mega-menu-blur-active .header .list-menu__item,
+.mega-menu-blur-active .header__inline-menu .list-menu__item,
+.mega-menu-blur-active header .list-menu__item,
+.mega-menu-blur-active nav .list-menu__item {
+  filter: none !important;
+}
 
+/* Also explicitly target the icon-caret in the header */
+.mega-menu-blur-active .header .icon-caret,
+.mega-menu-blur-active .header__inline-menu .icon-caret {
+  filter: none !important;
+}
 /* Add blur to checkboxes and labels within facets */
 .mega-menu-blur-active .facet-checkbox,
-.mega-menu-blur-active .facet-checkbox .title h1,
+.mega-menu-blur-active .list-menu__item,
 .mega-menu-blur-active .facets__item {
   filter: blur(5px) !important;
   transition: filter 0.3s ease !important;
