@@ -156,6 +156,18 @@
   margin-right: 0 !important; /* Ensure no right margin */
 }
 
+.featured-title {
+  text-align: right; /* Align text to the right */
+  margin-right: 0; /* Remove any right margin */
+  padding-right: 0; /* Remove any right padding */
+  font-size: 14px; /* Match the size from your mega-menu-featured-images::before */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 15px; /* Add some spacing below the title */
+  color: rgb(var(--color-foreground));
+}
+
 .mega-menu-featured-item img {
   width: 100%; /* Changed from 80% to take full width */
   height: auto;
