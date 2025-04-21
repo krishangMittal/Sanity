@@ -153,7 +153,7 @@
   max-width: 350px; /* Keep max-width consistent */
   max-height: 200px;
   margin-left: auto; /* This pushes the item to the right */
-  margin-right: 0 !important; /* Ensure no right margin */
+  margin-right: 20px !important; /* Ensure no right margin */
 }
 
 
