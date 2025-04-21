@@ -102,38 +102,6 @@
     },
     "1745269920b3efc4fc": {
       "type": "apps",
-      "blocks": {
-        "glood_product_recommendations_app_block_NFTkDj": {
-          "type": "shopify://apps/glood-product-recommendations/blocks/app-block/6e79d991-1504-45bb-88e3-1fb55a4f26cd",
-          "settings": {
-            "widget-id": "221083",
-            "padding-top": "",
-            "padding-bottom": "",
-            "class-names": "",
-            "custom-css": "",
-            "add-loader": false,
-            "min-height": "300px",
-            "custom-loader": "",
-            "skeletonEnabled": false,
-            "skeletonLayout": "grid",
-            "skeletonImageAspectRatio": "1:1",
-            "skeletonAtcEnabled": true,
-            "skeletonColumnCountMobile": 3,
-            "skeletonRowCountMobile": 1,
-            "skeletonColumnCountTablet": 4,
-            "skeletonRowCountTablet": 1,
-            "skeletonColumnCountDesktop": 6,
-            "skeletonRowCountDesktop": 1,
-            "skeletonProducts": 3,
-            "skeletonCardHtml": "",
-            "skeletonCardStyle": "",
-            "skeletonCustomJsCallback": ""
-          }
-        }
-      },
-      "block_order": [
-        "glood_product_recommendations_app_block_NFTkDj"
-      ],
       "settings": {
         "include_margins": true
       }
