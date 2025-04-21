@@ -136,7 +136,7 @@
   position: absolute;
   top: -20px;
   left: auto; /* Reset left positioning */
-  right: 220px; /* This is approximately the width of your image (350px) plus the right margin (20px) */
+  right: 240px; /* This is approximately the width of your image (350px) plus the right margin (20px) */
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.5px;
