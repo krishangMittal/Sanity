@@ -166,11 +166,17 @@ html, body {
 .mega-menu-blur-active .mega-menu__list,
 .mega-menu-blur-active .mega-menu-featured-images,
 .mega-menu-blur-active .mega-menu-featured-item,
-.mega-menu-blur-active .mega-menu-featured-label {
+.mega-menu-blur-active .mega-menu-featured-label,
+.mega-menu-blur-active .list-menu__item,
+.mega-menu-blur-active .list-menu,
+.mega-menu-blur-active nav,
+.mega-menu-blur-active summary,
+.mega-menu-blur-active details,
+.mega-menu-blur-active .list-menu__item span,
+.mega-menu-blur-active header-menu {
   filter: none !important;
   backdrop-filter: none !important;
 }
-
 .mega-menu-blur-active .multirow__inner,
 .mega-menu-blur-active .multirow__inner * {
   filter: blur(5px) !important;
