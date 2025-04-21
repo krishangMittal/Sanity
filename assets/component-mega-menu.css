@@ -121,13 +121,13 @@
 /* Featured Images Container */
 .mega-menu-featured-images {
   width: 25%;
-  padding: 0 !important; /* Added !important to override any other styles */
+  padding: 0 !important; /* This should override any conflicting styles */
+  margin: 0 !important; /* Add this to ensure no margin creates space */
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
 }
-
 .mega-menu-featured-images::before {
   content: 'FEATURED';
   position: absolute;
@@ -142,7 +142,7 @@
 
 /* Featured Image Items */
 .mega-menu-featured-item {
-  width: 80%;
+  width: 100% !important; /* Change from 80% to 100% */
   position: relative;
   border-radius: 4px;
   overflow: hidden;
@@ -179,9 +179,12 @@
 
 /* Mobile & Responsive Adjustments */
 @media screen and (max-width: 989px) {
-  .mega-menu__content {
-    flex-direction: column;
+  .mega-menu-featured-images {
+    width: 100%;
+    padding: 0 !important; /* Override the 20px padding in mobile view */
+    margin-top: 20px;
   }
+}
   
   .mega-menu__list {
     width: 100% !important;
@@ -204,4 +207,3 @@
     max-width: 350px;
     margin: 10px auto;
   }
-}
