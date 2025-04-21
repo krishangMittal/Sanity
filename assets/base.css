@@ -232,6 +232,12 @@ html, body {
   filter: none !important;
 }
 
+.mega-menu-blur-active .title.h1,
+.mega-menu-blur-active h1.title {
+  filter: blur(5px) !important;
+  transition: filter 0.3s ease !important;
+}
+
 /* Also explicitly target the icon-caret in the header */
 .mega-menu-blur-active .header .icon-caret,
 .mega-menu-blur-active .header__inline-menu .icon-caret {
