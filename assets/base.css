@@ -2444,13 +2444,37 @@ product-info .loading-overlay:not(.hidden) ~ *,
 
 
 @font-face {
-font-family: "PFDINTextArabic";
-src: url("PFDINTextArabic.woff2") format("woff2"),
-url("PFDINTextArabic.woff") format("woff");
+  font-family: "PFDINTextArabic";
+  src: url("PFDINTextArabic.woff2") format("woff2"),
+       url("PFDINTextArabic.woff") format("woff");
 }
- 
-Add Classes here with comma { font-family: "NAME OF FONT"!important; }
- 
+
+html, 
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, a, button, input, textarea, select, option,
+div, section, article, aside, header, footer, nav,
+.header, .footer, .main-content, .page-width,
+.product-title, .product-price, .product-description,
+.collection-title, .collection-description,
+.cart-title, .cart-price, .cart-quantity,
+.menu, .menu-item, .sub-menu,
+.list-menu, .list-menu__item,
+.btn, .button, .submit,
+.header__heading, .header__menu-item,
+.mega-menu__link, .mega-menu-featured-label,
+.featured-title, .trending, .collections-title,
+.collection-link, .category-link, .featured-link,
+.announcement-bar, .announcement-bar__message,
+.site-nav, .site-nav__link,
+.mobile-nav, .mobile-nav__link,
+.cart-notification, .cart-notification__product,
+.search-modal, .search__input,
+.icon-cart, .icon-account, .icon-search,
+.product-form__submit, .product__title,
+.price, .badge, .media {
+  font-family: "PFDINTextArabic" !important;
+}
 .announcement-bar__link .announcement-bar__message {
   padding: 0;
 }
