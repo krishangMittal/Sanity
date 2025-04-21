@@ -387,6 +387,20 @@
         "type": "shopify://apps/trustoo-io-reviews/blocks/trustoo-review-switch/c8f15077-6475-4e86-ad06-b66038d5ba2c",
         "disabled": false,
         "settings": {}
+      },
+      "13182238052301688732": {
+        "type": "shopify://apps/glood-product-recommendations/blocks/app-embed/6e79d991-1504-45bb-88e3-1fb55a4f26cd",
+        "disabled": false,
+        "settings": {
+          "enable-design-mode-preview": true,
+          "load-glood-ai-bundles": true,
+          "saperateBlockAPICalls": true,
+          "init-event-name": "",
+          "enableRecommendationV3": true,
+          "enableReleaseCandiatePreview": true,
+          "disable-rk-styles": true,
+          "add-glide-init-timeouts": true
+        }
       }
     }
   },
