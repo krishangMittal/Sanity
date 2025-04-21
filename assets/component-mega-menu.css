@@ -135,13 +135,13 @@
   content: 'FEATURED';
   position: absolute;
   top: -20px;
-  right: 20px; /* Match the 20px right margin of the images */
+  left: auto; /* Reset left positioning */
+  right: 370px; /* This is approximately the width of your image (350px) plus the right margin (20px) */
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
   color: rgb(var(--color-foreground));
-  text-align: right;
 }
 
 /* Featured Image Items */
