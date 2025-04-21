@@ -147,7 +147,7 @@
   border-radius: 4px;
   overflow: hidden;
   margin-top: 15px;
-  max-width: 350px; /* Adjust this value as needed */
+  max-width: 600px; /* Adjust this value as needed */
   /* You can also add max-height if desired */
   max-height: 200px; /* Adjust this value as needed */
 }
