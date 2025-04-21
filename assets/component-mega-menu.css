@@ -182,6 +182,8 @@
 @media screen and (max-width: 989px) {
   .mega-menu__content {
     flex-direction: column;
+        padding: 0 !important; /* Override the 20px padding in mobile view */
+
   }
   
   .mega-menu__list {
