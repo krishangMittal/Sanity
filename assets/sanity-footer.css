@@ -323,12 +323,12 @@
   }
   
   .mobile-footer-dropdown {
-    width: calc(25% - 30px);
+    width: calc(15% - 30px);
     margin-right: 30px;
   }
   
   .mobile-footer-dropdown.footer-about {
-    width: calc(25% - 0px);
+    width: calc(15% - 0px);
     margin-right: 0;
   }
 }
