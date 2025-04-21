@@ -9,11 +9,47 @@
  */
 {
   "sections": {
+    "image_banner_Y4hEpF": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_LCYxfq": {
+          "type": "heading",
+          "settings": {
+            "heading": "T-Shirts",
+            "heading_size": "h1"
+          }
+        },
+        "text_YPGFyJ": {
+          "type": "text",
+          "settings": {
+            "text": "Enjoy a style personal best for every workout with our men's workout tops, designed for high fitness performance and to give you the confidence to feel as good as you look. Our workout shirts ensure a flawless fit in a range of on-trend cuts, colours and designs to suit every shape and need. With sweat-wicking and breathable fabrics, you'll be perfectly-equipped to smash every workout.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_LCYxfq",
+        "text_YPGFyJ"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/71c03ed6-6fa1-4566-b251-d2fbf4188f6b.png",
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "desktop_content_position": "middle-left",
+        "show_text_box": true,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
     "banner": {
       "type": "main-collection-banner",
+      "disabled": true,
       "settings": {
         "show_collection_description": true,
-        "show_collection_image": false,
+        "show_collection_image": true,
         "color_scheme": "background-2"
       }
     },
@@ -37,6 +73,7 @@
     }
   },
   "order": [
+    "image_banner_Y4hEpF",
     "banner",
     "product-grid"
   ]
