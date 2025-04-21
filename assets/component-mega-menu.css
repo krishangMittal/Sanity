@@ -135,9 +135,9 @@
   content: 'FEATURED'; /* Change this text if you want */
   position: absolute;
   top: -20px;
-  right: 50px; /* Changed from left: 0 to align to the right */
+  right: 370px; /* Changed from left: 0 to align to the right */
   left: auto; /* Reset left positioning */
-  font-size: 370px;
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.5px;
   text-transform: uppercase;
