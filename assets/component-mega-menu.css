@@ -145,13 +145,13 @@
 
 /* Featured Image Items */
 .mega-menu-featured-item {
-  width: 350px !important; /* Set exact width to 350px */
+  width: 300px !important; /* Set exact width to 350px */
   position: relative;
   border-radius: 4px;
   overflow: hidden;
   margin-top: 15px;
   max-width: 350px; /* Keep max-width consistent */
-  max-height: 200px;
+  max-height: 150px;
   margin-left: auto; /* This pushes the item to the right */
   margin-right: 20px !important; /* Ensure no right margin */
 }
