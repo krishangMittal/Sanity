@@ -121,7 +121,7 @@
 /* Featured Images Container */
 .mega-menu-featured-images {
   width: 25%;
-  padding: 0 20px;
+  padding: 0 20px 0 0; /* This keeps 20px padding on the right but removes it from the left */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -132,7 +132,7 @@
   content: 'FEATURED';
   position: absolute;
   top: -20px;
-  left: 20px;
+  left: 0;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.5px;
