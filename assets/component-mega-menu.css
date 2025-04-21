@@ -144,6 +144,7 @@
   color: rgb(var(--color-foreground));
   text-align: right; /* Ensure text is right-aligned */
   width: 100%; /* Give it full width */
+
 }
 
 /* Featured Image Items */
