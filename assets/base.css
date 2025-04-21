@@ -2443,11 +2443,7 @@ product-info .loading-overlay:not(.hidden) ~ *,
 }
 
 
-@font-face {
-  font-family: "PFDINTextArabic";
-  src: url("PFDINTextArabic.woff2") format("woff2"),
-       url("PFDINTextArabic.woff") format("woff");
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 html, 
 body,
@@ -2473,7 +2469,7 @@ div, section, article, aside, header, footer, nav,
 .icon-cart, .icon-account, .icon-search,
 .product-form__submit, .product__title,
 .price, .badge, .media {
-  font-family: "PFDINTextArabic" !important;
+  font-family: 'Roboto', sans-serif !important;
 }
 .announcement-bar__link .announcement-bar__message {
   padding: 0;
