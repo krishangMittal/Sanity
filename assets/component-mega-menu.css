@@ -156,17 +156,7 @@
   margin-right: 0 !important; /* Ensure no right margin */
 }
 
-.featured-title {
-  text-align: right; /* Align text to the right */
-  margin-right: 0; /* Remove any right margin */
-  padding-right: 0; /* Remove any right padding */
-  font-size: 14px; /* Match the size from your mega-menu-featured-images::before */
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: 15px; /* Add some spacing below the title */
-  color: rgb(var(--color-foreground));
-}
+
 
 .mega-menu-featured-item img {
   width: 100%; /* Changed from 80% to take full width */
@@ -179,13 +169,21 @@
   transform: scale(1.05);
 }
 
-.mega-menu-featured-images h3.featured-title {
+.mega-menu-featured-label {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
   width: 100%;
-  text-align: right;
-  margin-top: 0;
-  align-self: flex-end; /* Align to the right edge */
+  text-align: center;
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 14px; /* Increased from 5px to a more readable size */
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  padding: 8px 0; /* Add some vertical padding */
+  background: rgba(0,0,0,0.4); /* Add a semi-transparent background */
 }
-
 .mega-menu-featured-label {
   /* Keep the existing properties */
   font-size: 14px;
