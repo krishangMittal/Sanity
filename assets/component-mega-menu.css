@@ -121,12 +121,14 @@
 /* Featured Images Container */
 .mega-menu-featured-images {
   width: 25%;
-  padding: 0 !important; /* Added !important to override any other styles */
-  margin: 0 !important; /* Add this to ensure no margin creates space */
+  padding: 0 !important;
+  margin: 0 !important;
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
+  max-width: none !important; /* Add this to remove width constraints */
+  right: 0 !important; /* Add this to ensure it extends to the edge */
 }
 
 .mega-menu-featured-images::before {
@@ -143,16 +145,15 @@
 
 /* Featured Image Items */
 .mega-menu-featured-item {
-  width: 100%;
+  width: 100% !important;
   position: relative;
   border-radius: 4px;
   overflow: hidden;
   margin-top: 15px;
-  max-width: 350px; /* Adjust this value as needed */
-  /* You can also add max-height if desired */
-  max-height: 200px; /* Adjust this value as needed */
+  max-width: none !important; /* Remove the max-width constraint */
+  max-height: 200px;
+  margin-right: 0 !important; /* Ensure no right margin */
 }
-
 .mega-menu-featured-item img {
   width: 100%; /* Changed from 80% to take full width */
   height: auto;
