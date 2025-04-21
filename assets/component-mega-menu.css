@@ -121,13 +121,13 @@
 /* Featured Images Container */
 .mega-menu-featured-images {
   width: 25%;
-  padding: 0 !important; /* This should override any conflicting styles */
-  margin: 0 !important; /* Add this to ensure no margin creates space */
+  padding: 0 !important; /* Added !important to override any other styles */
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
 }
+
 .mega-menu-featured-images::before {
   content: 'FEATURED';
   position: absolute;
@@ -142,12 +142,12 @@
 
 /* Featured Image Items */
 .mega-menu-featured-item {
-  width: 100% !important; /* Change from 80% to 100% */
+  width: 80%;
   position: relative;
   border-radius: 4px;
   overflow: hidden;
   margin-top: 15px;
-  max-width: 600px; /* Adjust this value as needed */
+  max-width: 350px; /* Adjust this value as needed */
   /* You can also add max-height if desired */
   max-height: 200px; /* Adjust this value as needed */
 }
@@ -179,12 +179,9 @@
 
 /* Mobile & Responsive Adjustments */
 @media screen and (max-width: 989px) {
-  .mega-menu-featured-images {
-    width: 100%;
-    padding: 0 !important; /* Override the 20px padding in mobile view */
-    margin-top: 20px;
+  .mega-menu__content {
+    flex-direction: column;
   }
-}
   
   .mega-menu__list {
     width: 100% !important;
@@ -207,3 +204,4 @@
     max-width: 350px;
     margin: 10px auto;
   }
+}
