@@ -382,6 +382,11 @@
         "settings": {
           "price_color": "#ff0000"
         }
+      },
+      "1143683040400472741": {
+        "type": "shopify://apps/trustoo-io-reviews/blocks/trustoo-review-switch/c8f15077-6475-4e86-ad06-b66038d5ba2c",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
