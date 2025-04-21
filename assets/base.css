@@ -2444,9 +2444,9 @@ product-info .loading-overlay:not(.hidden) ~ *,
 
 
 @font-face {
-font-family: "NAME OF FONT";
-src: url("NAME-OF-FONT-FILE.woff2") format("woff2"),
-url("NAME-OF-FONT-FILE.woff") format("woff");
+font-family: "PFDINTextArabic";
+src: url("PFDINTextArabic.woff2") format("woff2"),
+url("PFDINTextArabic.woff") format("woff");
 }
  
 Add Classes here with comma { font-family: "NAME OF FONT"!important; }
