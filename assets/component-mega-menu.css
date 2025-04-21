@@ -177,10 +177,27 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  font-size: 5px;
+  font-size: 14px; /* Increased from 5px to a more readable size */
   text-shadow: 0 0 10px rgba(0,0,0,0.5);
+  padding: 8px 0; /* Add some vertical padding */
+  background: rgba(0,0,0,0.4); /* Add a semi-transparent background */
+}
+.mega-menu-featured-label {
+  /* Keep the existing properties */
+  font-size: 14px;
+  padding: 8px 0;
+  background: rgba(0,0,0,0.4);
+  
+  /* Add these for better appearance */
+  backdrop-filter: blur(2px); /* Slight blur effect behind text */
+  border-radius: 0 0 4px 4px; /* Round the bottom corners to match the image */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
 }
 
+.mega-menu-featured-item:hover .mega-menu-featured-label {
+  background: rgba(0,0,0,0.6); /* Darker background on hover */
+  padding: 10px 0; /* Slightly bigger on hover */
+}
 /* Mobile & Responsive Adjustments */
 @media screen and (max-width: 989px) {
   .mega-menu__content {
