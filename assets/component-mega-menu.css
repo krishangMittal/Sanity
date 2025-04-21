@@ -169,12 +169,7 @@
   transform: scale(1.05);
 }
 
-.featured-title {
-  text-align: right !important;
-  width: 100% !important;
-  margin-bottom: 15px !important;
-  padding-right: 0 !important;
-}
+
 
 .mega-menu-featured-label {
   position: absolute;
