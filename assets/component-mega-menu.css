@@ -154,7 +154,7 @@
 
 .mega-menu-featured-item img {
   width: 100%; /* Changed from 80% to take full width */
-  height: a;
+  height: auto;
   display: block;
   transition: transform 0.3s ease;
 }
