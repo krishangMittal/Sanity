@@ -328,7 +328,7 @@
   }
   
   .mobile-footer-dropdown.footer-about {
-    width: calc(15% - 0px);
+    width: calc(25% - 0px);
     margin-right: 0;
   }
 }
