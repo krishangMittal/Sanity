@@ -150,9 +150,9 @@
   border-radius: 4px;
   overflow: hidden;
   margin-top: 15px;
-  max-width: none !important; /* Remove the max-width constraint */
+  max-width: 350px !important; /* Remove the max-width constraint */
   max-height: 200px;
-  margin-right: 0 !important; /* Ensure no right margin */
+  margin-right: 30px !important; /* Ensure no right margin */
 }
 .mega-menu-featured-item img {
   width: 100%; /* Changed from 80% to take full width */
