@@ -1,5 +1,5 @@
 .header-wrapper {
-  position: relative;
+  position: relative!
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -22,7 +22,7 @@
   z-index: 1;
 }
 .header {
-  padding: 15px 40px !important; /* Changed from 15px 0 to add left/right padding */
+  padding: 15px 0 !important;
 }
 
 html, body {
